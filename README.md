@@ -36,16 +36,6 @@ GitHub
 Figma
 Draw.io
 
-Project Structure
-smart-event-management-platform/
-│
-├── frontend/
-├── backend/
-├── database/
-├── docs/
-└── README.md
-Development Status
-
 The project is currently under active development.
 
 Planned Implementation Order
