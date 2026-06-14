@@ -4,13 +4,13 @@ This project aims to develop a web-based platform that assists users in discover
 
 To achieve this aim, the project pursues the following objectives:
 
-- Develop a web-based platform that enables users to create and manage events.
-- Develop an organiser module that allows organisers to create event pages and manage event-related activities.
-- Implement a service management system that enables users to browse and book event services.
-- Develop a step-by-step planning assistant that recommends suitable organisers based on user requirements.
-- Implement a visual simulation tool that allows users to preview and customise basic event layouts.
-- Implement search functionality that enables users to discover events and services.
-- Implement a communication feature that enables interaction between customers and organisers.
+Objective 1 → Event creation and management
+Objective 2 → Organiser dashboard and event pages
+Objective 3 → Service browsing and booking
+Objective 4 → Planning assistant
+Objective 5 → Visual simulation tool
+Objective 6 → Search functionality
+Objective 7 → Customer-organiser communication
 
 The project is being developed as part of the MSc Computer Science dissertation.
 
