@@ -17,42 +17,17 @@ The project is being developed as part of the MSc Computer Science dissertation.
 
 The current scope of the project includes:
 
-User registration and authentication
-Event creation and management
-Organiser page management
-Service booking
-Planning assistant
-Visual simulation tool
-Natural language search
-Chat system
-Reminder system
-Multi-language support (English and Arabic)
-Technology Stack
-Frontend
-React.js
-HTML
-CSS
-JavaScript
-Backend
-Node.js
-Express.js
-Database
-MySQL
-Development Tools
-Git
-GitHub
-Figma
-Draw.io
+## Project Structure
 
-The project is currently under active development.
+frontend/
+backend/
+docs/
 
-Planned Implementation Order
-Authentication
-Event Management
-Service Booking
-Planning Assistant
-Visual Simulation Tool
-Natural Language Search
-Chat System
-Reminder System
-Multi-language Support
+## Technologies
+
+- React
+- Node.js
+- Figma
+- Notion
+- MySQL
+- GitHub
