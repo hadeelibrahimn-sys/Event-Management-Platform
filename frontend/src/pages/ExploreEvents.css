@@ -1,0 +1,196 @@
+/* ─────────────────────────────────────────
+   ExploreEvents.css — matches Figma design
+   ───────────────────────────────────────── */
+
+/* Full page — fits exactly one screen */
+.explore-page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  /* Background — CSS gradient matching Figma purple-to-pink */
+  .explore-bg {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    /* Base pink from Figma #F7DDE2, purple on left */
+    background: linear-gradient(135deg, #c4aee8 0%, #d4b8e0 25%, #e8cede 60%, #F7DDE2 100%);
+  }
+  
+  /* Geometric diagonal shapes on left — pure CSS */
+  .explore-bg::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 45%;
+    height: 120%;
+    background: linear-gradient(160deg, #b8a0e0 0%, #c8b0e8 40%, transparent 100%);
+    clip-path: polygon(0 0, 60% 0, 40% 100%, 0 100%);
+    opacity: 0.7;
+  }
+  
+  .explore-bg::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: -2%;
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(160deg, #9070c8 0%, #a880d8 50%, transparent 100%);
+    clip-path: polygon(0 0, 50% 20%, 30% 100%, 0 100%);
+    opacity: 0.5;
+  }
+  
+  /* Content centered over background */
+  .explore-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+    padding: 0 40px;
+  }
+  
+  /* ── Title ── */
+  .explore-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #2d1b5e;
+    margin: 0;
+    text-align: center;
+  }
+  
+  /* ── Category buttons row ── */
+  .explore-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .category-btn {
+    padding: 10px 26px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    color: #2d1b5e;
+  }
+  
+  .category-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .category-btn.active { outline: 3px solid #5b21b6; }
+  
+  /* Category colors from Figma */
+  .category-btn--culture   { background-color: #d8b4d8; }
+  .category-btn--fun       { background-color: #c49ab0; }
+  .category-btn--education { background-color: #a8c4c0; }
+  .category-btn--business  { background-color: #c8d4a0; }
+  .category-btn--sports    { background-color: #9090b8; color: #fff; }
+  
+  /* ── Filter boxes row ── */
+  .explore-filters {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  
+  .filter-box {
+    width: 200px;
+    height: 48px;
+    background-color: rgba(200, 190, 220, 0.45);
+    border-radius: 10px;
+  }
+  
+  /* Free only */
+  .free-only {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #2d1b5e;
+    white-space: nowrap;
+  }
+  
+  .free-only input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #5b21b6;
+  }
+  
+  /* ── Search row ── */
+  .explore-search-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    max-width: 740px;
+  }
+  
+  .explore-search-input {
+    flex: 1;
+    height: 50px;
+    border: 2px solid #5b21b6;
+    border-radius: 12px;
+    background-color: rgba(240, 235, 255, 0.7);
+    padding: 0 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #2d1b5e;
+    outline: none;
+  }
+  
+  .explore-search-input:focus {
+    background-color: rgba(240, 235, 255, 0.9);
+  }
+  
+  .explore-search-btn {
+    height: 50px;
+    padding: 0 28px;
+    background-color: #5b21b6;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  
+  .explore-search-btn:hover { background-color: #4c1d95; }
+  
+  /* ── Clear filters ── */
+  .explore-clear-btn {
+    background-color: white;
+    color: #1a0a3d;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 26px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: box-shadow 0.2s;
+  }
+  
+  .explore-clear-btn:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+  
+  .clear-icon { font-size: 16px; }
