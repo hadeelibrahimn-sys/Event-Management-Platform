@@ -1,0 +1,251 @@
+/* ─────────────────────────────────────────
+   About.css — matches Figma About Us page
+   ───────────────────────────────────────── */
+
+   .about-page {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #FBF7FE;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  .about-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 60px;
+  }
+  
+  /* ══ SECTION 1 — Hero ══ */
+  .about-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 48px 0 40px;
+    gap: 40px;
+  }
+  
+  .about-hero-left {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .about-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7c3aed;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+  
+  .about-hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a0a3d;
+    line-height: 1.25;
+    margin: 0;
+  }
+  
+  .about-hero-desc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.75;
+    margin: 0;
+  }
+  
+  /* Right: image + mission card */
+  .about-hero-right {
+    flex: 1;
+    position: relative;
+    height: 280px;
+  }
+  
+  /* Single hero image — top right */
+  .about-img-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 90%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  /* Our Mission card */
+  .our-mission-card {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 210px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2;
+  }
+  
+  .mission-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .mission-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #7c3aed;
+  }
+  
+  .mission-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11.5px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  /* ══ SECTION 2 — Who We Are ══ */
+  .about-who {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    background: white;
+    border-radius: 16px;
+    padding: 32px 40px;
+    margin-bottom: 32px;
+  }
+  
+  .who-image-wrapper {
+    flex: 0 0 280px;
+  }
+  
+  .who-image {
+    width: 280px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .who-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .who-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a0a3d;
+    margin: 0;
+  }
+  
+  .who-desc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  .who-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 8px;
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .stat-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a0a3d;
+    margin: 0;
+  }
+  
+  .stat-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    color: #777;
+    margin: 0;
+  }
+  
+  /* ══ SECTION 3 — What We Do ══ */
+  .about-what {
+    padding: 32px 0 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .what-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a0a3d;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .what-underline {
+    width: 48px;
+    height: 3px;
+    background-color: #7c3aed;
+    border-radius: 2px;
+    margin-top: -16px;
+  }
+  
+  .what-cards {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .what-card {
+    flex: 1;
+    max-width: 200px;
+    background: white;
+    border-radius: 14px;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  
+  .what-card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a0a3d;
+    margin: 0;
+  }
+  
+  .what-card-desc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11.5px;
+    color: #777;
+    line-height: 1.6;
+    margin: 0;
+  }

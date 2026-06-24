@@ -1,0 +1,196 @@
+/* ─────────────────────────────────────────
+   Register.css — matches Figma Sign Up page
+   ───────────────────────────────────────── */
+
+   .register-page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;  /* ← change from center to stretch */
+    overflow: hidden;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #c4aee8 0%, #d4b8e8 30%, #e8c4d8 65%, #f0c8c0 100%);
+  }
+  
+  /* ── Navbar ── */
+  .register-navbar {
+    width: 100%;
+    padding: 20px 60px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+  
+  .register-nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  
+  .register-nav-links a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #3d1a6e;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  
+  .register-nav-links a:hover { opacity: 0.7; }
+  
+  /* ── Main card — row layout ── */
+  .register-card {
+    align-self: center;  /* ← add this */
+    display: flex;
+    flex-direction: row;
+    width: 780px;
+    max-width: 92vw;
+    margin-top: 24px;
+    max-height: 650px;
+    flex: 1;
+    background: rgba(245, 235, 255, 0.65);
+    backdrop-filter: blur(16px);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(120, 80, 200, 0.15);
+  }
+  
+  /* ── Left: geometric shapes ── */
+  .register-left {
+    flex: 0 0 42%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #b8a0e0 0%, #c8b0e8 50%, #d0a8d8 100%);
+  }
+  
+  .geo-shape {
+    position: absolute;
+  }
+  
+  .geo-shape-1 {
+    top: -10%;
+    left: -20%;
+    width: 140%;
+    height: 70%;
+    transform: rotate(35deg);
+    transform-origin: left center;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  
+  .geo-shape-2 {
+    top: 20%;
+    left: -30%;
+    width: 130%;
+    height: 55%;
+    transform: rotate(35deg);
+    transform-origin: left center;
+    background: rgba(180, 140, 220, 0.3);
+  }
+  
+  .geo-shape-3 {
+    top: 50%;
+    left: -20%;
+    width: 120%;
+    height: 65%;
+    transform: rotate(35deg);
+    transform-origin: left center;
+    background: rgba(140, 100, 190, 0.25);
+  }
+  
+  /* ── Right: title + form ── */
+  .register-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px 40px;
+    gap: 0;
+  }
+  
+  /* Title inside right side */
+  .register-page-title {
+    font-family: 'Poppins', wendy one;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d1b5e;
+    margin: 0 0 40px 0;
+    text-align: center;
+  }
+  
+  /* Subtitle */
+  .register-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #6b5080;
+    text-align: center;
+    margin: 0 0 30px 0;
+    line-height: 1.5;
+  }
+  
+  /* Form */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* Inputs */
+  .register-input {
+    width: 100%;
+    height: 48px;
+    background: rgba(220, 210, 235, 0.55);
+    border: none;
+    border-radius: 12px;
+    padding: 0 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #2d1b5e;
+    outline: none;
+    box-sizing: border-box;
+    transition: background 0.2s;
+  }
+  
+  .register-input::placeholder { color: #9080b0; }
+  .register-input:focus { background: rgba(240, 230, 255, 0.8); }
+  
+  /* Sign in link */
+  .register-signin-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #555;
+    text-align: center;
+    margin: 6px 0;
+  }
+  
+  .register-signin-link {
+    color: #5b21b6;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .register-signin-link:hover { text-decoration: underline; }
+  
+  /* Sign Up button */
+  .register-btn {
+    width: 75%;
+    height: 48px;
+    background: #5b21b6;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    font-style: italic;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 4px;
+    transition: background 0.2s;
+  }
+  
+  .register-btn:hover { background: #4c1d95; }
+

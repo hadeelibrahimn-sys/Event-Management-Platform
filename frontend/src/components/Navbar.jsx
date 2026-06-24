@@ -1,17 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
+import logoImage from "../assets/EventifyLogo.png";
 
 function Navbar() {
   const location = useLocation();
 
   return (
     <nav className="navbar">
-      {/* Logo */}
+
+      {/* Logo — now uses the real Eventify logo image */}
       <Link to="/" className="logo">
-        <div className="logo-icon">C</div>
-        <div className="logo-text">
-          <span className="logo-name">Eventify</span>
-        </div>
+        <img src={logoImage} alt="Eventify Logo" className="logo-img" />
       </Link>
 
       {/* Nav Links */}
@@ -37,6 +36,7 @@ function Navbar() {
           Register
         </Link>
       </div>
+
     </nav>
   );
 }
