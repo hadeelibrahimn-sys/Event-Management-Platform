@@ -65,14 +65,23 @@ Stores user planning preferences and organiser recommendations.
 - recommended_organiser_id
 
 ## Visual_Simulations
-Stores basic event layout customisation details.
+Stores saved 3D layouts from the Simulation Tool (DesignWorkspace). `event_id` is nullable — layouts can be saved before an event is linked, since Create Event backend is still pending.
 
 - simulation_id
 - user_id
-- event_id
-- layout_type
-- seating_arrangement
-- decoration_style
+- event_id (nullable, no FK yet)
+- event_name
+- guests
+- workspace_type (predefined | custom)
+- layout_type (indoor | enclosed | lshaped | garden | custom)
+- width, length, height
+- wall_color, floor_color
+- wall_texture (0 Plain, 1 Subtle, 2 Brick, 3 Marble)
+- lighting (Soft | Natural | Bright)
+- placed_items (JSON array of {id, type, x, z, ry})
+- created_at, updated_at
+
+See `backend/db/schema.sql` for the actual CREATE TABLE statement.
 
 ## Messages
 Stores communication between customers and organisers.

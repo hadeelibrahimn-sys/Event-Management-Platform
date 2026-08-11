@@ -1,42 +1,73 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Register.css";
 
 function Register() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Register:", name, email, password);
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ full_name: name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Registration failed");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/dashboard");
+
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="register-page">
-
-      {/* Shared Navbar */}
       <Navbar />
 
-      {/* Main card */}
       <div className="register-card">
-
-        {/* Left: decorative geometric shapes */}
         <div className="register-left">
           <div className="geo-shape geo-shape-1" />
           <div className="geo-shape geo-shape-2" />
           <div className="geo-shape geo-shape-3" />
         </div>
 
-        {/* Right: title + form */}
         <div className="register-right">
           <h1 className="register-page-title">Sign Up</h1>
           <p className="register-subtitle">
             Enter your personal details and start journey with us
           </p>
+
+          {error && <p className="register-error">{error}</p>}
 
           <form className="register-form" onSubmit={handleSubmit}>
             <input
@@ -77,14 +108,14 @@ function Register() {
               <Link to="/login" className="register-signin-link">Sign in</Link>
             </p>
 
-            <button type="submit" className="register-btn">Sign Up</button>
+            <button type="submit" className="register-btn" disabled={loading}>
+              {loading ? "Creating account..." : "Sign Up"}
+            </button>
           </form>
         </div>
       </div>
 
-      {/* Shared Footer */}
       <Footer />
-
     </div>
   );
 }

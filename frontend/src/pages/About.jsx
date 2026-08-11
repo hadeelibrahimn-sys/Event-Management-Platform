@@ -77,43 +77,6 @@ function About() {
               Our platform empowers organisers, connects service providers, and
               creates memorable experiences for attendees.
             </p>
-
-            {/* Stats */}
-            <div className="who-stats">
-              <div className="stat-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                  stroke="#7c3aed" strokeWidth="1.8">
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                </svg>
-                <div>
-                  <p className="stat-number">10K+</p>
-                  <p className="stat-label">Happy Users</p>
-                </div>
-              </div>
-              <div className="stat-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                  stroke="#7c3aed" strokeWidth="1.8">
-                  <rect x="3" y="4" width="18" height="18" rx="2" />
-                  <path d="M16 2v4M8 2v4M3 10h18" />
-                </svg>
-                <div>
-                  <p className="stat-number">5K+</p>
-                  <p className="stat-label">Events Hosted</p>
-                </div>
-              </div>
-              <div className="stat-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                  stroke="#7c3aed" strokeWidth="1.8">
-                  <circle cx="12" cy="8" r="6" />
-                  <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
-                </svg>
-                <div>
-                  <p className="stat-number">500+</p>
-                  <p className="stat-label">Trusted Partners</p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 

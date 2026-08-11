@@ -1,0 +1,90 @@
+/* PreviewLayout.css */
+
+.p3d-page {
+    height: 100vh;
+    width: 100%;
+    background: #f5f0ff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Header */
+  .p3d-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: white;
+    border-bottom: 1px solid #e5e0f5;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(120,80,200,0.06);
+  }
+  
+  .p3d-back-btn {
+    background: none;
+    border: 1.5px solid #e5e0f5;
+    border-radius: 20px;
+    padding: 7px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #7c3aed;
+    cursor: pointer;
+    font-weight: 500;
+    transition: border-color 0.2s;
+  }
+  
+  .p3d-back-btn:hover { border-color: #7c3aed; }
+  
+  .p3d-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a0a3d;
+    margin: 0;
+  }
+  
+  .p3d-title span { color: #7c3aed; }
+  
+  .p3d-controls-hint {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #888;
+  }
+  
+  /* 3D canvas fills remaining space */
+  .p3d-canvas {
+    flex: 1;
+    width: 100%;
+    cursor: grab;
+    overflow: hidden;
+  }
+  
+  .p3d-canvas:active { cursor: grabbing; }
+  
+  /* Legend */
+  .p3d-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 10px;
+    background: white;
+    border-top: 1px solid #e5e0f5;
+    flex-shrink: 0;
+  }
+  
+  .p3d-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+  
+  .p3d-legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+  }

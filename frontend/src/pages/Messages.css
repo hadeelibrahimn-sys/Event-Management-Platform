@@ -1,0 +1,126 @@
+.msg-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #f8f6ff;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.msg-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
+}
+
+.msg-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a0a3d;
+  margin: 0 0 24px;
+}
+
+.msg-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b6280;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.msg-explore-btn {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 22px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.msg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.msg-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+
+.msg-row:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+
+.msg-row.unread { background: #faf8ff; }
+
+.msg-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #7c3aed;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.msg-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.msg-row-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.msg-row-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a0a3d;
+  margin: 0;
+}
+
+.msg-row.unread .msg-row-name { font-weight: 700; }
+
+.msg-row-time {
+  font-size: 11px;
+  color: #b0a8c8;
+  flex-shrink: 0;
+}
+
+.msg-row-preview {
+  font-size: 12.5px;
+  color: #8b7bb0;
+  margin: 2px 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.msg-row.unread .msg-row-preview { color: #4b4560; font-weight: 500; }
+
+.msg-unread-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ec4899;
+  flex-shrink: 0;
+}

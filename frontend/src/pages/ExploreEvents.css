@@ -2,27 +2,27 @@
    ExploreEvents.css — matches Figma design
    ───────────────────────────────────────── */
 
-/* Full page — fits exactly one screen */
+/* Full page — hero sits at the top, results flow below it */
 .explore-page {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     box-sizing: border-box;
+    background: #f8f6ff;
   }
-  
-  /* Background — CSS gradient matching Figma purple-to-pink */
-  .explore-bg {
-    flex: 1;
+
+  /* Hero — bounded to its own content (not the full scrollable page), so the
+     gradient/shapes below don't get stretched or cut off as results grow. */
+  .explore-hero {
     position: relative;
     overflow: hidden;
     /* Base pink from Figma #F7DDE2, purple on left */
     background: linear-gradient(135deg, #c4aee8 0%, #d4b8e0 25%, #e8cede 60%, #F7DDE2 100%);
   }
-  
+
   /* Geometric diagonal shapes on left — pure CSS */
-  .explore-bg::before {
+  .explore-hero::before {
     content: '';
     position: absolute;
     top: -10%;
@@ -33,8 +33,8 @@
     clip-path: polygon(0 0, 60% 0, 40% 100%, 0 100%);
     opacity: 0.7;
   }
-  
-  .explore-bg::after {
+
+  .explore-hero::after {
     content: '';
     position: absolute;
     top: 20%;
@@ -45,18 +45,26 @@
     clip-path: polygon(0 0, 50% 20%, 30% 100%, 0 100%);
     opacity: 0.5;
   }
-  
-  /* Content centered over background */
-  .explore-content {
+
+  /* Hero content centered over background */
+  .explore-hero-content {
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
+    justify-content: flex-start;
     gap: 20px;
-    padding: 0 40px;
+    padding: 50px 40px 60px;
+  }
+
+  /* Results section — flat background matching the rest of the app, so the
+     hero gradient never has to stretch to cover an unbounded results list. */
+  .explore-results-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 30px 40px 60px;
   }
   
   /* ── Title ── */
@@ -92,12 +100,17 @@
   .category-btn:hover { opacity: 0.85; transform: translateY(-1px); }
   .category-btn.active { outline: 3px solid #5b21b6; }
   
-  /* Category colors from Figma */
-  .category-btn--culture   { background-color: #d8b4d8; }
-  .category-btn--fun       { background-color: #c49ab0; }
-  .category-btn--education { background-color: #a8c4c0; }
-  .category-btn--business  { background-color: #c8d4a0; }
-  .category-btn--sports    { background-color: #9090b8; color: #fff; }
+  /* Category group colors */
+  .category-btn--culture         { background-color: #d8b4d8; }
+  .category-btn--entertainment   { background-color: #c49ab0; }
+  .category-btn--education       { background-color: #a8c4c0; }
+  .category-btn--business        { background-color: #c8d4a0; }
+  .category-btn--sports          { background-color: #9090b8; color: #fff; }
+  .category-btn--community       { background-color: #f0c987; }
+  .category-btn--wellness        { background-color: #a9d8b8; }
+  .category-btn--technology      { background-color: #8fb8dd; color: #fff; }
+  .category-btn--food-drink      { background-color: #e8a878; }
+  .category-btn--celebrations    { background-color: #e8a0c0; }
   
   /* ── Filter boxes row ── */
   .explore-filters {
@@ -194,3 +207,12 @@
   .explore-clear-btn:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
   
   .clear-icon { font-size: 16px; }
+
+  /* ── Results ── */
+  /* Card + grid + status styles now live in components/EventCard.css
+     (shared with SavedEvents). Only this page's own results wrapper
+     stays here. */
+  .explore-results {
+    width: 100%;
+    max-width: 1100px;
+  }

@@ -1,37 +1,61 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", email, password);
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Login failed");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate(location.state?.from || "/dashboard");
+
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="login-page">
-
-      {/* Shared Navbar */}
       <Navbar />
-
-      {/* Centered login card */}
       <div className="login-container">
-
         <div className="login-avatar">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
             <circle cx="12" cy="8" r="4" />
             <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
           </svg>
         </div>
-
         <div className="login-card">
           <h2 className="login-title">Log In</h2>
-
+          {error && <p className="login-error">{error}</p>}
           <form className="login-form" onSubmit={handleSubmit}>
             <input
               type="email"
@@ -54,19 +78,17 @@ function Login() {
                 Forgot password?
               </Link>
             </div>
-            <button type="submit" className="login-btn">Log in</button>
+            <button type="submit" className="login-btn" disabled={loading}>
+              {loading ? "Logging in..." : "Log in"}
+            </button>
           </form>
-
           <p className="login-signup-text">
             Don't have an account?{" "}
             <Link to="/register" className="login-signup-link">Sign up</Link>
           </p>
         </div>
       </div>
-
-      {/* Shared Footer */}
       <Footer />
-
     </div>
   );
 }

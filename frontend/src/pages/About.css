@@ -160,33 +160,6 @@
     margin: 0;
   }
   
-  .who-stats {
-    display: flex;
-    gap: 32px;
-    margin-top: 8px;
-  }
-  
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .stat-number {
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a0a3d;
-    margin: 0;
-  }
-  
-  .stat-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-    color: #777;
-    margin: 0;
-  }
-  
   /* ══ SECTION 3 — What We Do ══ */
   .about-what {
     padding: 32px 0 48px;
