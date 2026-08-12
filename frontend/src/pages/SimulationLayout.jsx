@@ -3,6 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import customLayoutPreview from "../assets/layouts/customizelayout.png";
 import "./SimulationLayout.css";
+import thumbIndoor from "../assets/layouts/thumb-indoor.png";
+import thumbEnclosed from "../assets/layouts/thumb-enclosed.png";
+import thumbLShaped from "../assets/layouts/thumb-lshaped.png";
+import thumbGarden from "../assets/layouts/thumb-garden.png";
 
 /* ── sessionStorage helpers ── */
 const KEYS = {
@@ -30,7 +34,7 @@ const LAYOUTS = {
     thumb: (active) => (
       <div className={`sl-thumb-img-wrap ${active ? "active" : ""}`}>
         <img
-          src="/src/assets/layouts/thumb-indoor.png"
+          src={thumbIndoor}
           alt="Indoor Hall"
           className="sl-thumb-img"
         />
@@ -46,7 +50,7 @@ const LAYOUTS = {
     thumb: (active) => (
       <div className={`sl-thumb-img-wrap ${active ? "active" : ""}`}>
         <img
-          src="/src/assets/layouts/thumb-enclosed.png"
+          src={thumbEnclosed}
           alt="Enclosed Room"
           className="sl-thumb-img"
         />
@@ -62,7 +66,7 @@ const LAYOUTS = {
     thumb: (active) => (
       <div className={`sl-thumb-img-wrap ${active ? "active" : ""}`}>
         <img
-          src="/src/assets/layouts/thumb-lshaped.png"
+          src={thumbLShaped}
           alt="L-Shaped Room"
           className="sl-thumb-img"
         />
@@ -79,7 +83,7 @@ const LAYOUTS = {
     thumb: (active) => (
       <div className={`sl-thumb-img-wrap ${active ? "active" : ""}`}>
         <img
-          src="/src/assets/layouts/thumb-garden.png"
+         src={thumbGarden}
           alt="Garden / Outdoor"
           className="sl-thumb-img"
         />
