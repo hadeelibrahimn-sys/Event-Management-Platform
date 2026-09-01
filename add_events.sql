@@ -1,13 +1,3 @@
--- Eventify: add 4 new events, organized by the existing Demo Organizer account
--- (demo.organizer@eventify.local, the same one behind your seed.sql events).
---
--- Safe to re-run: it first deletes any existing rows with these exact 4
--- titles, so running this again (e.g. after an edit) replaces them instead
--- of creating duplicates.
---
--- Run from your Mac terminal:
---   cd /Users/hadeel/event-management-platform
---   mysql -u root eventify < add_events.sql
 
 DELETE FROM events WHERE title IN (
   'Eventify Project Opening',
