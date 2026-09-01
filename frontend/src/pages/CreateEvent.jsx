@@ -85,7 +85,7 @@ function CreateEvent() {
   return (
     <div className="ce-page">
 
-      {/* ── Navbar ── */}
+      {/* Navbar */}
       <nav className="ce-navbar">
         <span className="ce-logo">Organizer</span>
         <div className="ce-nav-links">
@@ -112,7 +112,7 @@ function CreateEvent() {
 
       <div className="ce-content">
 
-        {/* ── Hero banner ── */}
+        {/* Hero banner */}
         <div className="ce-hero">
           <div className="ce-hero-left">
             <h1 className="ce-hero-title">

@@ -89,7 +89,7 @@ const Event = {
     return rows;
   },
 
-  // Just the published ones — for the public Organizer Profile page.
+  // Only the published events, for the public Organizer Profile page.
   async findPublishedByOrganizer(organizer_id) {
     const [rows] = await db.execute(
       `SELECT * FROM events WHERE organizer_id = ? AND status = 'published' ORDER BY created_at DESC`,
@@ -98,9 +98,9 @@ const Event = {
     return rows;
   },
 
-  // Simple content-based "recommendations" — published events, optionally
-  // narrowed to one category_group, excluding a given set of ids (events
-  // the user already saved/booked/hosts). Not ML, just a filtered feed.
+  // Simple content-based "recommendations": published events, optionally
+  // narrowed to one category_group, and excluding a given set of ids (events
+  // the user already saved, booked, or hosts). Not ML, just a filtered feed.
   async findRecommended({ excludeEventIds = [], group = null, limit = 4 } = {}) {
     let query = `SELECT * FROM events WHERE status = 'published'`;
     const params = [];

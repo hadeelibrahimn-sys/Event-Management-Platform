@@ -8,7 +8,7 @@ const {
   sendMessage,
 } = require('../controllers/conversationController');
 
-// Messaging is always "as me" — every route requires auth.
+// Messaging is always "as me", so every route requires auth.
 router.use(authMiddleware);
 
 router.post('/conversations', startOrOpenConversation);

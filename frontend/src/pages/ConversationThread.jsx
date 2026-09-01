@@ -58,7 +58,7 @@ function ConversationThread() {
 
   useEffect(() => {
     loadMessages();
-    // Light polling, not real-time infrastructure — just a periodic refetch
+    // Light polling, not real-time infrastructure. Just a periodic refetch
     // so a reply shows up without a manual reload.
     const interval = setInterval(() => loadMessages({ silent: true }), POLL_MS);
     return () => clearInterval(interval);

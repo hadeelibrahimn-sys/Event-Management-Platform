@@ -2,7 +2,7 @@ const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
 const User = require('../models/User');
 
-// POST /api/conversations — "Contact Organizer" entry point. Reopens the
+// POST /api/conversations: "Contact Organizer" entry point. Reopens the
 // existing conversation between these two users if one exists, else
 // creates a new one.
 const startOrOpenConversation = async (req, res) => {
@@ -24,7 +24,7 @@ const startOrOpenConversation = async (req, res) => {
   }
 };
 
-// GET /api/conversations — inbox
+// GET /api/conversations: inbox
 const getMyConversations = async (req, res) => {
   try {
     const conversations = await Conversation.findByUser(req.user.user_id);
@@ -35,7 +35,7 @@ const getMyConversations = async (req, res) => {
   }
 };
 
-// GET /api/conversations/:id/messages — thread, and marks it read for the caller
+// GET /api/conversations/:id/messages: thread, and marks it read for the caller
 const getMessages = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +56,7 @@ const getMessages = async (req, res) => {
   }
 };
 
-// POST /api/conversations/:id/messages — send a message
+// POST /api/conversations/:id/messages: send a message
 const sendMessage = async (req, res) => {
   try {
     const { id } = req.params;

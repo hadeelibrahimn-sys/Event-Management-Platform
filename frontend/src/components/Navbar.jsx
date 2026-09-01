@@ -6,14 +6,15 @@ function Navbar() {
   const location = useLocation();
 
   // Logged-in users should land back on their Dashboard, not the public
-  // landing/login page — no reason to send them through that journey again.
+  // landing/login page, since there's no reason to send them through that
+  // journey again.
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const homePath = isLoggedIn ? "/dashboard" : "/";
 
   return (
     <nav className="navbar">
 
-      {/* Logo — now uses the real Eventify logo image */}
+      {/* Logo: uses the real Eventify logo image */}
       <Link to={homePath} className="logo">
         <img src={logoImage} alt="Eventify Logo" className="logo-img" />
       </Link>

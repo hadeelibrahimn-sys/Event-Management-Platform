@@ -70,7 +70,7 @@ function ExploreEvents() {
     }
 
     setSavePendingId(eventId);
-    // Optimistic update — flip it back if the request fails.
+    // Optimistic update. Flip it back if the request fails.
     setSavedIds((prev) => {
       const next = new Set(prev);
       if (nextSaved) next.add(eventId); else next.delete(eventId);
@@ -109,7 +109,7 @@ function ExploreEvents() {
     <div className="explore-page">
       <Navbar />
 
-      {/* Hero — CSS gradient background with geometric shapes, bounded to its own content height */}
+      {/* Hero: CSS gradient background with geometric shapes, bounded to its own content height */}
       <div className="explore-hero">
         <div className="explore-hero-content">
 
@@ -166,7 +166,7 @@ function ExploreEvents() {
         </div>
       </div>
 
-      {/* Results — flat background, consistent with the rest of the app */}
+      {/* Results: flat background, consistent with the rest of the app */}
       <div className="explore-results-section">
         <div className="explore-results">
           {loading && <p className="event-list-status">Loading events...</p>}

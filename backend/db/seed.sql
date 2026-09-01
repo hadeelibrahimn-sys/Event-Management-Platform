@@ -48,7 +48,7 @@ CROSS JOIN (
   UNION ALL
   SELECT
     'Intro to Watercolor Painting Workshop', 'workshop', 'Education',
-    'A hands-on beginner workshop covering watercolor basics — materials, techniques, and your first painting.',
+    'A hands-on beginner workshop covering watercolor basics, materials, techniques, and your first painting.',
     'in-person', 'Eventify Art Studio', '45 Maple Ave',
     '2026-08-22', '2026-08-22', '10:00:00', '13:00:00',
     20, '2026-08-20',
@@ -75,7 +75,7 @@ CROSS JOIN (
   UNION ALL
   SELECT
     'Hybrid Wellness & Fitness Expo', 'fitness', 'Wellness',
-    'Sessions on nutrition, fitness classes, and wellness talks — attend in person or join select sessions online.',
+    'Sessions on nutrition, fitness classes, and wellness talks. Attend in person or join select sessions online.',
     'hybrid', 'Wellness Convention Center', '88 Health Way',
     '2026-11-14', '2026-11-15', '08:30:00', '18:00:00',
     800, '2026-11-10',
@@ -93,7 +93,7 @@ CROSS JOIN (
   UNION ALL
   SELECT
     'Community Beach Cleanup Day', 'volunteering', 'Community',
-    'Join neighbors and local groups for a morning of cleaning up the shoreline — gloves and bags provided.',
+    'Join neighbors and local groups for a morning of cleaning up the shoreline. Gloves and bags are provided.',
     'in-person', 'Sunset Beach', 'Shoreline Access Rd',
     '2026-08-16', '2026-08-16', '08:00:00', '11:00:00',
     NULL, NULL,
@@ -120,7 +120,7 @@ CROSS JOIN (
   UNION ALL
   SELECT
     'Open Garden Wedding Showcase', 'wedding', 'Celebrations',
-    'Tour a real garden wedding setup and meet local vendors — florists, caterers, and planners — in one place.',
+    'Tour a real garden wedding setup and meet local vendors, including florists, caterers, and planners, in one place.',
     'in-person', 'Willowbrook Gardens', '77 Willow Ln',
     '2026-10-11', '2026-10-11', '13:00:00', '17:00:00',
     300, '2026-10-08',

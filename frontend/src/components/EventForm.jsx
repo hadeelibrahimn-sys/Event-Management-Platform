@@ -1,7 +1,7 @@
 import { EVENT_CATEGORIES } from "../data/eventCategories";
 import "../pages/CreateEvent.css";
 
-// Shared event form used by both CreateEvent and EditEvent — covers every
+// Shared event form used by both CreateEvent and EditEvent. It covers every
 // field that maps to the events table (title, category, description,
 // format, venue, dates/times, participants, image). The pages around this
 // component own the navbar/hero and decide what "save" actually means
@@ -22,7 +22,7 @@ function EventForm({
 
   return (
     <>
-      {/* ── Event Details ── */}
+      {/* Event Details */}
       <div className="ce-section">
         <div className="ce-section-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8">
@@ -75,7 +75,7 @@ function EventForm({
         </div>
       </div>
 
-      {/* ── Event Format ── */}
+      {/* Event Format */}
       <div className="ce-section">
         <div className="ce-section-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8">
@@ -125,7 +125,7 @@ function EventForm({
         </div>
       </div>
 
-      {/* ── Venue Information ── */}
+      {/* Venue Information */}
       {form.format !== "online" && (
         <div className="ce-section">
           <div className="ce-section-header">
@@ -161,7 +161,7 @@ function EventForm({
         </div>
       )}
 
-      {/* ── Date & Time ── */}
+      {/* Date & Time */}
       <div className="ce-section">
         <div className="ce-section-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8">
@@ -190,7 +190,7 @@ function EventForm({
         </div>
       </div>
 
-      {/* ── Participant Details ── */}
+      {/* Participant Details */}
       <div className="ce-section">
         <div className="ce-section-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8">
@@ -222,7 +222,7 @@ function EventForm({
         </div>
       </div>
 
-      {/* ── Event Image ── */}
+      {/* Event Image */}
       <div className="ce-section">
         <div className="ce-section-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8">
@@ -248,7 +248,7 @@ function EventForm({
         )}
       </div>
 
-      {/* ── Footer buttons ── */}
+      {/* Footer buttons */}
       {submitError && <p className="ce-submit-error">{submitError}</p>}
       <div className="ce-footer-btns">
         {onCancel && (

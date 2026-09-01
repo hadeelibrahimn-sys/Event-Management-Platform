@@ -10,7 +10,7 @@ const {
 } = require('../controllers/savedEventController');
 
 // Everything here is about the current user's own saved list, so every
-// route requires auth — there's no public view of someone else's saves.
+// route requires auth. There's no public view of someone else's saves.
 router.use(authMiddleware);
 
 // /ids must come before /:eventId or express would treat "ids" as an id.

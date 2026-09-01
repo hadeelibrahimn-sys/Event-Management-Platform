@@ -67,7 +67,7 @@ const getMe = async (req, res) => {
   }
 };
 
-// PUT /api/auth/me — update the current user's name/email
+// PUT /api/auth/me: update the current user's name/email
 const updateProfile = async (req, res) => {
   try {
     const { full_name, email } = req.body;
@@ -88,7 +88,7 @@ const updateProfile = async (req, res) => {
   }
 };
 
-// PUT /api/auth/me/password — change the current user's password
+// PUT /api/auth/me/password: change the current user's password
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;

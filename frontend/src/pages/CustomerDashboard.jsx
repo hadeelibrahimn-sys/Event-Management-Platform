@@ -88,7 +88,7 @@ function CustomerDashboard() {
   return (
     <div className="dashboard-page">
 
-      {/* ── Sidebar ── */}
+      {/* Sidebar */}
       <aside className="dashboard-sidebar">
 
         <div className="sidebar-logo">
@@ -125,7 +125,7 @@ function CustomerDashboard() {
 
       </aside>
 
-      {/* ── Main Content ── */}
+      {/* Main Content */}
       <main className="dashboard-main">
 
         {/* Top bar */}

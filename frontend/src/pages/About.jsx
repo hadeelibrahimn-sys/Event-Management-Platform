@@ -10,7 +10,7 @@ function About() {
 
       <div className="about-content">
 
-        {/* ── SECTION 1: Hero ── */}
+        {/* Section 1: Hero */}
         <section className="about-hero">
 
           {/* Left: text */}
@@ -57,7 +57,7 @@ function About() {
           </div>
         </section>
 
-        {/* ── SECTION 2: Who We Are ── */}
+        {/* Section 2: Who We Are */}
         <section className="about-who">
 
           {/* Left: about2 image only here */}
@@ -80,7 +80,7 @@ function About() {
           </div>
         </section>
 
-        {/* ── SECTION 3: What We Do ── */}
+        {/* Section 3: What We Do */}
         <section className="about-what">
           <h2 className="what-title">What We Do</h2>
           <div className="what-underline" />

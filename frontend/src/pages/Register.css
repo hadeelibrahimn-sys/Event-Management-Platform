@@ -1,6 +1,4 @@
-/* ─────────────────────────────────────────
-   Register.css — matches Figma Sign Up page
-   ───────────────────────────────────────── */
+/* Register.css — matches Figma Sign Up page */
 
    .register-page {
     height: 100vh;
@@ -13,7 +11,7 @@
     background: linear-gradient(135deg, #c4aee8 0%, #d4b8e8 30%, #e8c4d8 65%, #f0c8c0 100%);
   }
   
-  /* ── Navbar ── */
+  /* Navbar  */
   .register-navbar {
     width: 100%;
     padding: 20px 60px;
@@ -59,7 +57,7 @@
     box-shadow: 0 8px 32px rgba(120, 80, 200, 0.15);
   }
   
-  /* ── Left: geometric shapes ── */
+  /* Left: geometric shapes */
   .register-left {
     flex: 0 0 42%;
     position: relative;
@@ -101,7 +99,7 @@
     background: rgba(140, 100, 190, 0.25);
   }
   
-  /* ── Right: title + form ── */
+  /* Right: title + form  */
   .register-right {
     flex: 1;
     display: flex;

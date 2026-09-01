@@ -28,7 +28,7 @@ const Conversation = {
     return conversation_id;
   },
 
-  // The "Contact Organizer" entry point — reopen if it exists, else create.
+  // The "Contact Organizer" entry point. Reopens the conversation if it exists, else creates one.
   async findOrCreateBetween(userA, userB) {
     const existing = await this.findExistingBetween(userA, userB);
     if (existing) return existing;

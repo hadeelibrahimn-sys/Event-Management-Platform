@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./SimulationInfo.css";
 
-/* ── sessionStorage helpers ── */
+/* sessionStorage helpers */
 const STORAGE_KEYS = {
   name:      "eventify_sim_name",
   guests:    "eventify_sim_guests",
   eventType: "eventify_sim_event_type",
 };
 
-/* ── Event types (docs/customization-system-design.md §5) ──
+/* Event types (docs/customization-system-design.md §5).
    Used later, in the workspace, to rank the object library so relevant
-   items surface first — nothing is ever hidden based on this choice.
+   items surface first. Nothing is ever hidden based on this choice.
    Mirrors the broad category groups used across the platform
    (frontend/src/data/eventCategories.js) so "event type" here and
    "category" elsewhere stay conceptually aligned. */
@@ -41,7 +41,7 @@ const readFromSession = (key) => {
 export default function SimulationInfo() {
   const navigate = useNavigate();
 
-  /* ── Form state — initialised from sessionStorage if available ── */
+  /* Form state, initialised from sessionStorage if available */
   const [eventName, setEventName] = useState(
     () => readFromSession(STORAGE_KEYS.name)
   );
@@ -52,11 +52,11 @@ export default function SimulationInfo() {
     () => readFromSession(STORAGE_KEYS.eventType)
   );
 
-  /* ── Validation error state ── */
+  /* Validation error state */
   const [errors, setErrors] = useState({ name: "", guests: "", eventType: "" });
   const [touched, setTouched] = useState({ name: false, guests: false, eventType: false });
 
-  /* ── Persist to sessionStorage on every change ── */
+  /* Persist to sessionStorage on every change */
   useEffect(() => {
     saveToSession(STORAGE_KEYS.name, eventName);
   }, [eventName]);
@@ -69,7 +69,7 @@ export default function SimulationInfo() {
     saveToSession(STORAGE_KEYS.eventType, eventType);
   }, [eventType]);
 
-  /* ── Validation logic ── */
+  /* Validation logic */
   const validateName = (value) => {
     if (!value.trim()) return "Event name is required.";
     if (value.trim().length < 2) return "Event name must be at least 2 characters.";
@@ -95,7 +95,7 @@ export default function SimulationInfo() {
     setErrors(prev => ({ ...prev, eventType: validateEventType(id) }));
   };
 
-  /* ── Live validation as user types (only after field touched) ── */
+  /* Live validation as user types (only after field touched) */
   const handleNameChange = (e) => {
     const val = e.target.value;
     setEventName(val);
@@ -118,7 +118,7 @@ export default function SimulationInfo() {
     setErrors(prev => ({ ...prev, guests: validateGuests(guests) }));
   };
 
-  /* ── Submit ── */
+  /* Submit */
   const handleContinue = () => {
     const nameErr      = validateName(eventName);
     const guestsErr    = validateGuests(guests);

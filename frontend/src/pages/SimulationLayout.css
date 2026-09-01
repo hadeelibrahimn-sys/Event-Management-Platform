@@ -23,7 +23,7 @@
   box-sizing: border-box;
 }
 
-/* ── Header ── */
+/* Header  */
 .sl-header {
   width: 100%;
   text-align: center;
@@ -71,7 +71,7 @@
   margin: 0;
 }
 
-/* ── Steps ── */
+/* Steps  */
 .sl-steps {
   display: flex;
   align-items: center;
@@ -142,7 +142,7 @@
 }
 .sl-event-pill strong { color: #7c3aed; }
 
-/* ── Main grid ── */
+/* Main grid */
 .sl-grid {
   display: grid;
   grid-template-columns: 1fr 380px;
@@ -151,7 +151,7 @@
   align-items: start;
 }
 
-/* ── Section ── */
+/* Section */
 .sl-section {
   display: flex;
   gap: 14px;
@@ -366,7 +366,7 @@
   color: #666;
 }
 
-/* ── Right column ── */
+/* Right column */
 .sl-right {
   display: flex;
   flex-direction: column;
@@ -567,7 +567,7 @@
 
 .sl-start-btn.ready:hover { background: #6d28d9; }
 
-/* ── Layout thumbnail images ── */
+/* Layout thumbnail images */
 .sl-thumb-img-wrap {
   width: 100%;
   height: 140px;

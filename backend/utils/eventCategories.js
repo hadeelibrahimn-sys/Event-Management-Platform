@@ -1,11 +1,11 @@
-// Canonical event category taxonomy — shared source of truth (mirrored on the
-// frontend at frontend/src/data/eventCategories.js; keep both in sync).
+// Canonical event category taxonomy. This is the shared source of truth,
+// mirrored on the frontend at frontend/src/data/eventCategories.js. Keep both in sync.
 //
 // Organizers pick a specific, detailed category in CreateEvent. Every
 // detailed category belongs to exactly one broad group, which is what
 // ExploreEvents filters by. category_group is always derived server-side
-// from `category` via getCategoryGroup() — it is never trusted from the
-// client — so the mapping only has to be correct in one place per runtime.
+// from `category` via getCategoryGroup(). It is never trusted from the
+// client, so the mapping only has to be correct in one place per runtime.
 
 const EVENT_CATEGORIES = [
   {

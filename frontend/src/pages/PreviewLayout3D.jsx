@@ -11,7 +11,7 @@ function PreviewLayout() {
   const canvasItems = location.state?.canvasItems || [];
   const layoutName = location.state?.layoutName || "Indoor Hall";
 
-  // Color state — user can customise
+  // Color state, user can customise
   const [wallColor, setWallColor] = useState("#f0ecfa");
   const [floorColor, setFloorColor] = useState("#e8e0f0");
   const [ceilingColor, setCeilingColor] = useState("#faf8ff");
@@ -41,17 +41,17 @@ function PreviewLayout() {
     const width = mount.clientWidth;
     const height = mount.clientHeight;
 
-    /* ── Scene ── */
+    /* Scene */
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#f5f0ff");
     scene.fog = new THREE.Fog("#f5f0ff", 25, 60);
 
-    /* ── Camera ── */
+    /* Camera */
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
     camera.position.set(0, 8, 14);
     camera.lookAt(0, 0, 0);
 
-    /* ── Renderer ── */
+    /* Renderer */
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -59,7 +59,7 @@ function PreviewLayout() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     mount.appendChild(renderer.domElement);
 
-    /* ── Lights ── */
+    /* Lights */
     const ambient = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambient);
 
@@ -78,10 +78,10 @@ function PreviewLayout() {
     pointLight2.position.set(6, 6, 4);
     scene.add(pointLight2);
 
-    /* ── Room dimensions ── */
+    /* Room dimensions */
     const W = 16, D = 12, H = 5;
 
-    /* ── Floor ── */
+    /* Floor */
     const floorMat = new THREE.MeshLambertMaterial({ color: floorColor });
     floorMatRef.current = floorMat;
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(W, D, 20, 20), floorMat);
@@ -94,7 +94,7 @@ function PreviewLayout() {
     grid.position.y = 0.01;
     scene.add(grid);
 
-    /* ── Ceiling ── */
+    /* Ceiling */
     const ceilingMat = new THREE.MeshLambertMaterial({ color: ceilingColor, side: THREE.BackSide });
     ceilingMatRef.current = ceilingMat;
     const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), ceilingMat);
@@ -102,7 +102,7 @@ function PreviewLayout() {
     ceiling.position.y = H;
     scene.add(ceiling);
 
-    /* ── Walls ── */
+    /* Walls */
     const wallMat = new THREE.MeshLambertMaterial({ color: wallColor, side: THREE.BackSide });
     wallMatRef.current = wallMat;
 
@@ -123,7 +123,7 @@ function PreviewLayout() {
     rightWall.rotation.y = -Math.PI / 2;
     scene.add(rightWall);
 
-    /* ── Wall trim lines ── */
+    /* Wall trim lines */
     const trimMat = new THREE.LineBasicMaterial({ color: 0xc4b5fd });
     const trimPoints = [
       new THREE.Vector3(-W/2, 0, -D/2),
@@ -136,7 +136,7 @@ function PreviewLayout() {
       new THREE.BufferGeometry().setFromPoints(trimPoints), trimMat
     ));
 
-    /* ── Place furniture ── */
+    /* Place furniture */
     const scaleX = W / 800;
     const scaleZ = D / 600;
 
@@ -299,7 +299,7 @@ function PreviewLayout() {
       }
     });
 
-    /* ── Mouse orbit controls ── */
+    /* Mouse orbit controls */
     let isDragging = false, isPanning = false;
     let prevMouse = { x: 0, y: 0 };
     let theta = 0, phi = Math.PI / 4, radius = 18;
@@ -347,7 +347,7 @@ function PreviewLayout() {
     mount.addEventListener("wheel", onWheel);
     mount.addEventListener("contextmenu", (e) => e.preventDefault());
 
-    /* ── Animation ── */
+    /* Animation */
     let animId;
     const animate = () => {
       animId = requestAnimationFrame(animate);
@@ -355,7 +355,7 @@ function PreviewLayout() {
     };
     animate();
 
-    /* ── Resize ── */
+    /* Resize */
     const onResize = () => {
       const w = mount.clientWidth, h = mount.clientHeight;
       camera.aspect = w / h;

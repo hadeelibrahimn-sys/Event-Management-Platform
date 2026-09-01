@@ -1,6 +1,4 @@
-/* ─────────────────────────────────────────
-   ExploreEvents.css — matches Figma design
-   ───────────────────────────────────────── */
+/* ExploreEvents.css — matches Figma design */
 
 /* Full page — hero sits at the top, results flow below it */
 .explore-page {
@@ -144,7 +142,7 @@
     accent-color: #5b21b6;
   }
   
-  /* ── Search row ── */
+  /*  Search row  */
   .explore-search-row {
     display: flex;
     gap: 10px;
@@ -208,7 +206,7 @@
   
   .clear-icon { font-size: 16px; }
 
-  /* ── Results ── */
+  /*  Results  */
   /* Card + grid + status styles now live in components/EventCard.css
      (shared with SavedEvents). Only this page's own results wrapper
      stays here. */

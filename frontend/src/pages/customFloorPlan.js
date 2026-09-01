@@ -1,5 +1,5 @@
 /* Tile-based floor plan model for the in-3D Custom Layout builder.
-   Pure logic, no Three.js/React dependency — easy to reason about and test.
+   Pure logic, no Three.js/React dependency, so it's easy to reason about and test.
 
    A room is a set of occupied 1-tile cells on an integer grid (i, j).
    Walls are derived automatically from tile occupancy: any edge between an
@@ -15,7 +15,7 @@ export const parseTileKey = (k) => {
   return { i, j };
 };
 
-/* Default starting footprint — a rectangle roughly matching the width/length
+/* Default starting footprint: a rectangle roughly matching the width/length
    chosen on the Layout step, centered on the origin. */
 export function initialTiles(width, length) {
   const halfI = Math.max(1, Math.round(width / TILE_SIZE / 2));
@@ -76,9 +76,9 @@ export function frontierTiles(tileSet) {
   return Array.from(frontier);
 }
 
-/* BFS reachability — true if every tile in the set can be reached from
+/* BFS reachability. Returns true if every tile in the set can be reached from
    every other tile through 4-directional neighbors. Used to block removing
-   a tile that would split the room into two disconnected pieces; walls
+   a tile that would split the room into two disconnected pieces. Walls
    render fine either way (computeBoundaryEdges/mergeEdgesIntoSegments don't
    care about connectivity), but a floating second room isn't a shape anyone
    building this actually wants, so it's stopped at the removal step rather
@@ -101,9 +101,9 @@ export function isConnected(tileKeys) {
 }
 
 /* Merge collinear, contiguous boundary edges into wall segments.
-   A run breaks wherever an edge has a door or a window — that edge becomes
+   A run breaks wherever an edge has a door or a window. That edge becomes
    its own single-edge "door"/"window" segment instead of merging with its
-   neighbors (an edge is never both — callers are expected to keep the two
+   neighbors (an edge is never both; callers are expected to keep the two
    key sets disjoint). */
 export function mergeEdgesIntoSegments(edges, doorEdgeKeys, windowEdgeKeys) {
   const isDoor = (key) => doorEdgeKeys && doorEdgeKeys.has(key);
@@ -157,7 +157,7 @@ export function mergeEdgesIntoSegments(edges, doorEdgeKeys, windowEdgeKeys) {
   return segments.map(s => ({ ...s, id: `${s.orientation}-${s.edgeKeys[0]}` }));
 }
 
-/* Nearest edge key within a segment to a given world point — used to know
+/* Nearest edge key within a segment to a given world point. Used to know
    which specific 1-tile edge a door/window toggle should apply to. */
 export function nearestEdgeInSegment(segment, x, z) {
   if (segment.isDoor || segment.isWindow) return segment.edgeKeys[0];

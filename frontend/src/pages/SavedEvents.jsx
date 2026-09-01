@@ -43,7 +43,7 @@ function SavedEvents() {
   }, [loadSavedEvents]);
 
   // Unsaving here removes the card entirely rather than just flipping the
-  // heart — this page is only ever showing saved events.
+  // heart, since this page is only ever showing saved events.
   const handleToggleSave = async (eventId, nextSaved) => {
     if (nextSaved) return; // cards here are always already saved
 

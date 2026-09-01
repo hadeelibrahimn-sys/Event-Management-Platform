@@ -1,5 +1,6 @@
-// Canonical event category taxonomy — shared source of truth (mirrored on the
-// backend at backend/utils/eventCategories.js; keep both in sync).
+// Canonical event category taxonomy. This is the shared source of truth
+// and is mirrored on the backend at backend/utils/eventCategories.js, so
+// keep both in sync.
 //
 // Organizers pick a specific, detailed category in CreateEvent. Every
 // detailed category belongs to exactly one broad group, which is what
@@ -118,7 +119,7 @@ export function getCategoryGroup(category) {
   return CATEGORY_TO_GROUP[category] || 'Other';
 }
 
-// e.g. "Food & Drink" -> "food-drink" — used to key CSS classes and lookups.
+// e.g. "Food & Drink" -> "food-drink". Used to key CSS classes and lookups.
 export function slugifyGroup(group) {
   return group.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }

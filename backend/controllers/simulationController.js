@@ -24,7 +24,7 @@ const validateBody = (body) => {
   return null;
 };
 
-// POST /api/simulation — save a new layout
+// POST /api/simulation: save a new layout
 const saveSimulation = async (req, res) => {
   try {
     const error = validateBody(req.body);
@@ -55,7 +55,7 @@ const saveSimulation = async (req, res) => {
   }
 };
 
-// PUT /api/simulation/:id — update an existing layout owned by the user
+// PUT /api/simulation/:id: update an existing layout owned by the user
 const updateSimulation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -92,7 +92,7 @@ const updateSimulation = async (req, res) => {
   }
 };
 
-// GET /api/simulation — list the current user's saved layouts (summary only)
+// GET /api/simulation: list the current user's saved layouts (summary only)
 const getMySimulations = async (req, res) => {
   try {
     const simulations = await VisualSimulation.findByUser(req.user.user_id);
@@ -103,7 +103,7 @@ const getMySimulations = async (req, res) => {
   }
 };
 
-// GET /api/simulation/:id — full detail for one layout (must belong to user)
+// GET /api/simulation/:id: full detail for one layout (must belong to user)
 const getSimulationById = async (req, res) => {
   try {
     const { id } = req.params;

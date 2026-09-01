@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 const SavedEvent = {
-  // Idempotent — saving an already-saved event just leaves the row as is.
+  // Idempotent. Saving an already-saved event just leaves the row as is.
   async save(user_id, event_id) {
     await db.execute(
       `INSERT INTO saved_events (user_id, event_id)
@@ -41,8 +41,8 @@ const SavedEvent = {
     return rows;
   },
 
-  // Just the event_ids — cheap way for a list page (ExploreEvents) to mark
-  // which of the events it's already showing are saved, without an N+1.
+  // Just the event_ids. This is a cheap way for a list page (ExploreEvents) to
+  // mark which of the events it's already showing are saved, without an N+1.
   async findEventIdsByUser(user_id) {
     const [rows] = await db.execute(
       'SELECT event_id FROM saved_events WHERE user_id = ?',

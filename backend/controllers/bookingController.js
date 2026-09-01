@@ -1,7 +1,7 @@
 const Booking = require('../models/Booking');
 const Event = require('../models/Event');
 
-// POST /api/bookings — reserve a spot at an event (free RSVP, v1 — no payment)
+// POST /api/bookings: reserve a spot at an event (free RSVP for now; v1 has no payment)
 const createBooking = async (req, res) => {
   try {
     const { event_id } = req.body;
@@ -49,7 +49,7 @@ const createBooking = async (req, res) => {
   }
 };
 
-// GET /api/bookings/mine — the current user's bookings ("Attending" tab)
+// GET /api/bookings/mine: the current user's bookings ("Attending" tab)
 const getMyBookings = async (req, res) => {
   try {
     const bookings = await Booking.findByUser(req.user.user_id);
@@ -76,7 +76,7 @@ const getBookingById = async (req, res) => {
   }
 };
 
-// DELETE /api/bookings/:id — cancel (sets status, doesn't delete the row)
+// DELETE /api/bookings/:id: cancel (sets status, doesn't delete the row)
 const cancelBooking = async (req, res) => {
   try {
     const { id } = req.params;

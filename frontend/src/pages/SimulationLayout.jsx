@@ -8,7 +8,7 @@ import thumbEnclosed from "../assets/layouts/thumb-enclosed.png";
 import thumbLShaped from "../assets/layouts/thumb-lshaped.png";
 import thumbGarden from "../assets/layouts/thumb-garden.png";
 
-/* ── sessionStorage helpers ── */
+/* sessionStorage helpers */
 const KEYS = {
   name:      "eventify_sim_name",
   guests:    "eventify_sim_guests",
@@ -23,7 +23,7 @@ const KEYS = {
 const save = (key, val) => { try { sessionStorage.setItem(key, String(val)); } catch(e) {} };
 const read = (key, fallback = "") => { try { return sessionStorage.getItem(key) ?? fallback; } catch(e) { return fallback; } };
 
-/* ── Layout config ── */
+/* Layout config */
 const LAYOUTS = {
   indoor: {
     id: "indoor",
@@ -92,7 +92,7 @@ const LAYOUTS = {
   },
 };
 
-/* ── Capacity guidance ── */
+/* Capacity guidance */
 function getCapacityGuidance(width, length, guests) {
   if (!width || !length || !guests) return null;
   const usableArea = width * length * 0.7;
@@ -120,7 +120,7 @@ export default function SimulationLayout() {
   const navigate  = useNavigate();
   const location  = useLocation();
 
-  /* ── Recover data from location.state or sessionStorage ── */
+  /* Recover data from location.state or sessionStorage */
   const eventName = location.state?.eventName || read(KEYS.name)  || "";
   const guests    = Number(location.state?.guests || read(KEYS.guests) || 0);
   const eventType = location.state?.eventType || read(KEYS.eventType) || "";
@@ -130,7 +130,7 @@ export default function SimulationLayout() {
     if (!eventName || !guests) navigate("/simulation", { replace: true });
   }, []);
 
-  /* ── Local state ── */
+  /* Local state */
   const [workspaceType, setWorkspaceType] = useState(read(KEYS.type) || "predefined");
   const [selectedLayout, setSelectedLayout] = useState(read(KEYS.layout) || "indoor");
   const [dims, setDims] = useState({
@@ -142,7 +142,7 @@ export default function SimulationLayout() {
 
   const layout = LAYOUTS[selectedLayout] || LAYOUTS.indoor;
 
-  /* ── When layout changes reset dims to defaults ── */
+  /* When layout changes reset dims to defaults */
   useEffect(() => {
     setDims({
       width:  layout.defaultWidth,
@@ -152,7 +152,7 @@ export default function SimulationLayout() {
     setDimErrors({ width: "", length: "", height: "" });
   }, [selectedLayout]);
 
-  /* ── Persist to sessionStorage ── */
+  /* Persist to sessionStorage */
   useEffect(() => { save(KEYS.type, workspaceType); }, [workspaceType]);
   useEffect(() => { save(KEYS.layout, selectedLayout); }, [selectedLayout]);
   useEffect(() => {
@@ -161,7 +161,7 @@ export default function SimulationLayout() {
     save(KEYS.height, dims.height);
   }, [dims]);
 
-  /* ── Dimension validation ── */
+  /* Dimension validation */
   const validateDim = (name, value) => {
     const n = Number(value);
     if (!value) return `${name} is required.`;
@@ -177,14 +177,14 @@ export default function SimulationLayout() {
     setDimErrors(prev => ({ ...prev, [field]: validateDim(label, value) }));
   };
 
-  /* ── Capacity guidance ── */
+  /* Capacity guidance */
   const guidance = getCapacityGuidance(
     workspaceType === "predefined" ? dims.width : dims.width,
     dims.length,
     guests
   );
 
-  /* ── Can proceed? ── */
+  /* Can proceed? */
   const canProceed = () => {
     if (workspaceType === "predefined" && !selectedLayout) return false;
     if (dimErrors.width || dimErrors.length) return false;
@@ -193,7 +193,7 @@ export default function SimulationLayout() {
     return true;
   };
 
-  /* ── Start Designing ── */
+  /* Start Designing */
   const handleStart = () => {
     if (!canProceed()) return;
     navigate("/workspace", {
@@ -263,7 +263,7 @@ export default function SimulationLayout() {
         {/* Main grid */}
         <div className="sl-grid">
 
-          {/* ── Left: Workspace Type + Layout selection ── */}
+          {/* Left: Workspace Type + Layout selection */}
           <div className="sl-left">
 
             {/* Step 1: Workspace type */}
@@ -307,7 +307,7 @@ export default function SimulationLayout() {
                     </div>
                     <div className="sl-type-text">
                       <span className="sl-type-name">Custom Layout</span>
-                      <span className="sl-type-desc">Start with a blank ground. Add walls, doors, and elements yourself.</span>
+                      <span className="sl-type-desc">Starts with a basic room shape. Extend the floor, add doors and windows, and place elements yourself.</span>
                     </div>
                   </button>
 
@@ -355,18 +355,18 @@ export default function SimulationLayout() {
               <div className="sl-section">
                 <div className="sl-section-num">2</div>
                 <div className="sl-section-body">
-                  <h2 className="sl-section-title">Custom Blank Ground</h2>
+                  <h2 className="sl-section-title">Your Starting Room</h2>
                   <div className="sl-custom-preview">
                     <img
                       src={customLayoutPreview}
-                      alt="Custom layout — build your own walls, doors and floor"
+                      alt="Custom layout — a starting room you can extend and customise"
                       className="sl-custom-preview-img"
                     />
                   </div>
                   <div className="sl-custom-included">
                     <p className="sl-custom-included-title">What's included at the start:</p>
                     <div className="sl-custom-items">
-                      {["No walls","No doors","No windows","No furniture","No decorations","No lights","No ceiling","No objects"].map(item => (
+                      {["No doors","No windows","No furniture","No decorations","No lights","No ceiling","No objects"].map(item => (
                         <div key={item} className="sl-custom-item">
                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5">
                             <path d="M18 6L6 18M6 6l12 12"/>
@@ -382,7 +382,7 @@ export default function SimulationLayout() {
 
           </div>
 
-          {/* ── Right: Dimensions + Capacity ── */}
+          {/* Right: Dimensions + Capacity */}
           <div className="sl-right">
 
             {/* Step 3: Dimensions */}

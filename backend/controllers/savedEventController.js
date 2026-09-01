@@ -1,7 +1,7 @@
 const SavedEvent = require('../models/SavedEvent');
 const Event = require('../models/Event');
 
-// POST /api/saved-events/:eventId — save an event for the current user
+// POST /api/saved-events/:eventId: save an event for the current user
 const saveEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
@@ -16,7 +16,7 @@ const saveEvent = async (req, res) => {
   }
 };
 
-// DELETE /api/saved-events/:eventId — unsave an event for the current user
+// DELETE /api/saved-events/:eventId: unsave an event for the current user
 const unsaveEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
@@ -28,7 +28,7 @@ const unsaveEvent = async (req, res) => {
   }
 };
 
-// GET /api/saved-events — full saved event rows for the current user
+// GET /api/saved-events: full saved event rows for the current user
 const getMySavedEvents = async (req, res) => {
   try {
     const events = await SavedEvent.findEventsByUser(req.user.user_id);
@@ -39,7 +39,7 @@ const getMySavedEvents = async (req, res) => {
   }
 };
 
-// GET /api/saved-events/ids — just the event_ids the current user has saved
+// GET /api/saved-events/ids: just the event_ids the current user has saved
 const getMySavedEventIds = async (req, res) => {
   try {
     const eventIds = await SavedEvent.findEventIdsByUser(req.user.user_id);
@@ -50,7 +50,7 @@ const getMySavedEventIds = async (req, res) => {
   }
 };
 
-// GET /api/saved-events/:eventId — is this one event saved by the current user?
+// GET /api/saved-events/:eventId: is this one event saved by the current user?
 const checkSaved = async (req, res) => {
   try {
     const { eventId } = req.params;

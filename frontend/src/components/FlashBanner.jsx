@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 // A small dismissible success/error banner, driven by react-router
 // navigate(path, { state: { flash: "..." } }). Auto-hides after a few
-// seconds but can also be dismissed manually. Deliberately styleless-by-
-// default beyond inline styles so it can drop into any page's color scheme
-// without needing its own CSS file per page.
+// seconds but can also be dismissed manually. It's deliberately styleless
+// by default beyond inline styles, so it can drop into any page's color
+// scheme without needing its own CSS file per page.
 function FlashBanner({ message, tone = "success", onDismiss, autoHideMs = 5000 }) {
   const [visible, setVisible] = useState(true);
 

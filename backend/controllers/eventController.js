@@ -11,7 +11,7 @@ const validateBody = (body) => {
   return null;
 };
 
-// POST /api/events — create a new event (must be logged in)
+// POST /api/events: create a new event (must be logged in)
 const createEvent = async (req, res) => {
   try {
     const error = validateBody(req.body);
@@ -43,7 +43,7 @@ const createEvent = async (req, res) => {
   }
 };
 
-// GET /api/events — public list of published events, with optional filters
+// GET /api/events: public list of published events, with optional filters
 const getEvents = async (req, res) => {
   try {
     const { category, group, format, search } = req.query;
@@ -55,7 +55,7 @@ const getEvents = async (req, res) => {
   }
 };
 
-// GET /api/events/:id — public event detail
+// GET /api/events/:id: public event detail
 const getEventById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -72,7 +72,7 @@ const getEventById = async (req, res) => {
   }
 };
 
-// PUT /api/events/:id — update an event owned by the current user
+// PUT /api/events/:id: update an event owned by the current user
 const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
@@ -110,10 +110,10 @@ const updateEvent = async (req, res) => {
   }
 };
 
-// GET /api/events/recommended — a simple content-based feed for the
-// dashboard: events in whichever category_group the user has shown the
+// GET /api/events/recommended: a simple content-based feed for the
+// dashboard. It shows events in whichever category_group the user has shown the
 // most interest in (via saves/bookings), excluding anything they've
-// already saved, booked, or host themselves. Falls back to "recently
+// already saved, booked, or host themselves. It falls back to "recently
 // published" when there's no signal yet or the preferred group comes up empty.
 const getRecommendedEvents = async (req, res) => {
   try {
@@ -150,7 +150,7 @@ const getRecommendedEvents = async (req, res) => {
   }
 };
 
-// GET /api/events/mine/list — the current user's own events (any status)
+// GET /api/events/mine/list: the current user's own events (any status)
 const getMyEvents = async (req, res) => {
   try {
     const events = await Event.findByOrganizer(req.user.user_id);

@@ -13,7 +13,7 @@ function generateReferenceCode() {
 const Booking = {
   async create({ event_id, user_id, quantity = 1 }) {
     // Reference codes are random and short, so collisions are astronomically
-    // unlikely — but this retries a handful of times just in case rather
+    // unlikely. Still, this retries a handful of times just in case, rather
     // than trusting that.
     let lastError;
     for (let attempt = 0; attempt < 5; attempt++) {

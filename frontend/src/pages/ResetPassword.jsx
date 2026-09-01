@@ -13,7 +13,7 @@ function ResetPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: connect to backend — verify token and update password
+    // TODO: connect to backend. Verify token and update password
     console.log("Reset password:", password);
   };
 

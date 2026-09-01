@@ -19,7 +19,7 @@ const EMPTY_FORM = {
   imageUrl: "",
 };
 
-// The API stores dates as full ISO timestamps and times as "HH:MM:SS" —
+// The API stores dates as full ISO timestamps and times as "HH:MM:SS".
 // HTML date/time inputs need "YYYY-MM-DD" and "HH:MM".
 const toDateInput = (value) => (value ? String(value).slice(0, 10) : "");
 const toTimeInput = (value) => (value ? String(value).slice(0, 5) : "");
@@ -155,7 +155,7 @@ function EditEvent() {
   return (
     <div className="ce-page">
 
-      {/* ── Navbar ── */}
+      {/* Navbar */}
       <nav className="ce-navbar">
         <span className="ce-logo">Organizer</span>
         <div className="ce-nav-links">

@@ -10,8 +10,8 @@ const formatDate = (dateStr) => {
 
 // Shared event card used by both ExploreEvents and SavedEvents so the two
 // pages don't drift into two different card designs. `saved`/`onToggleSave`
-// are optional — pages that don't care about the save state (there are
-// none right now, but future ones might) can simply omit them and no heart
+// are optional. Pages that don't care about the save state (there are
+// none right now, but future ones might) can simply omit them, and no heart
 // button is rendered.
 function EventCard({ event, saved = false, onToggleSave, savePending = false }) {
   const navigate = useNavigate();

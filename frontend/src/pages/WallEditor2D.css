@@ -22,7 +22,7 @@
   position: relative;
 }
 
-/* ── First-time intro ── */
+/* First-time intro */
 .we-intro {
   position: absolute;
   inset: 0;
@@ -59,7 +59,7 @@
 }
 .we-intro-btn:hover { background: #6d28d9; }
 
-/* ── Persistent tool hint ── */
+/* Persistent tool hint */
 .we-hint-bar {
   display: flex;
   align-items: center;
@@ -135,7 +135,7 @@
 }
 .we-action-btn:hover { border-color: #7c3aed; color: #7c3aed; }
 
-/* ── Body ── */
+/* Body */
 .we-body {
   flex: 1;
   display: flex;
@@ -163,7 +163,7 @@
 .we-svg.tool-door { cursor: pointer; }
 .we-svg.tool-select { cursor: default; }
 
-/* ── Inspector ── */
+/* Inspector */
 .we-inspector {
   width: 220px;
   flex-shrink: 0;
@@ -193,7 +193,7 @@
 }
 .we-delete-btn:hover { background: #fee2e2; }
 
-/* ── Footer ── */
+/* Footer */
 .we-footer {
   display: flex;
   justify-content: flex-end;

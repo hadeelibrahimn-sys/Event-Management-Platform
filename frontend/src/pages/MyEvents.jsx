@@ -11,13 +11,13 @@ function MyEvents() {
   const [activeTab, setActiveTab] = useState(searchParams.get("tab") === "attending" ? "attending" : "hosting");
   const [flash, setFlash] = useState(location.state?.flash || "");
 
-  // Hosting — events this user created.
+  // Hosting: events this user created.
   const [hostedEvents, setHostedEvents] = useState([]);
   const [hostedLoading, setHostedLoading] = useState(true);
   const [hostedError, setHostedError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
 
-  // Attending — events this user booked a spot at.
+  // Attending: events this user booked a spot at.
   const [bookings, setBookings] = useState([]);
   const [bookingsLoading, setBookingsLoading] = useState(true);
   const [bookingsError, setBookingsError] = useState("");

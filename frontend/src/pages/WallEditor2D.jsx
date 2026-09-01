@@ -74,7 +74,7 @@ export default function WallEditor2D({ width, length, initialWalls, initialFloor
     return { x: p.x, z: p.y };
   };
 
-  /* ── Selection helpers ── */
+  /* Selection helpers */
   const findNearestWall = (x, z) => {
     let best = null;
     walls.forEach(w => {
@@ -112,7 +112,7 @@ export default function WallEditor2D({ width, length, initialWalls, initialFloor
     return best?.door || null;
   };
 
-  /* ── Tool interactions ── */
+  /* Tool interactions */
   const handleDown = (e) => {
     e.preventDefault();
     const p = svgPoint(e);
@@ -195,7 +195,7 @@ export default function WallEditor2D({ width, length, initialWalls, initialFloor
     detachDocListeners();
   };
 
-  /* ── Document-level listeners while dragging (so drags don't break at svg edges) ── */
+  /* Document-level listeners while dragging, so drags don't break at svg edges */
   const onDocMove = (e) => handleDragMove(e.clientX, e.clientY);
   const onDocUp = () => commitDrag();
   const attachDocListeners = () => {
@@ -208,7 +208,7 @@ export default function WallEditor2D({ width, length, initialWalls, initialFloor
   };
   useEffect(() => () => detachDocListeners(), []);
 
-  /* ── Keyboard: Escape cancels drag, Delete removes selection ── */
+  /* Keyboard: Escape cancels drag, Delete removes selection */
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") cleanupDrag();
@@ -263,7 +263,7 @@ export default function WallEditor2D({ width, length, initialWalls, initialFloor
     historyRef.current = [];
   };
 
-  /* ── Grid lines ── */
+  /* Grid lines */
   const gridLinesX = [];
   for (let gx = -Math.floor(W / 2); gx <= Math.floor(W / 2); gx += 1) gridLinesX.push(gx);
   const gridLinesZ = [];

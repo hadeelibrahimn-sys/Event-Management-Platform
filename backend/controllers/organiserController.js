@@ -1,7 +1,7 @@
 const OrganiserProfile = require('../models/OrganiserProfile');
 const Event = require('../models/Event');
 
-// GET /api/organisers/me — the current user's own profile (may not exist yet)
+// GET /api/organisers/me: the current user's own profile (may not exist yet)
 const getMyProfile = async (req, res) => {
   try {
     const profile = await OrganiserProfile.findByUserId(req.user.user_id);
@@ -12,7 +12,7 @@ const getMyProfile = async (req, res) => {
   }
 };
 
-// PUT /api/organisers/me — create or update the current user's profile
+// PUT /api/organisers/me: create or update the current user's profile
 const upsertMyProfile = async (req, res) => {
   try {
     const { bio, specialty, location } = req.body;
@@ -39,7 +39,7 @@ const upsertMyProfile = async (req, res) => {
   }
 };
 
-// GET /api/organisers — public directory (profile + >=1 published event)
+// GET /api/organisers: public directory (profile + >=1 published event)
 const getOrganizers = async (req, res) => {
   try {
     const { search } = req.query;
@@ -51,7 +51,7 @@ const getOrganizers = async (req, res) => {
   }
 };
 
-// GET /api/organisers/:userId — public profile + their published events
+// GET /api/organisers/:userId: public profile + their published events
 const getOrganizerById = async (req, res) => {
   try {
     const { userId } = req.params;

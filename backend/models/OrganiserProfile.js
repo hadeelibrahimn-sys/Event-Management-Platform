@@ -26,7 +26,7 @@ const OrganiserProfile = {
   },
 
   // The public directory: only users with a profile AND at least one
-  // published event show up here — avoids listing someone who clicked
+  // published event show up here. This avoids listing someone who clicked
   // "Create Event" once and never actually organized anything.
   async findDirectory({ search = null } = {}) {
     let query = `
@@ -56,7 +56,7 @@ const OrganiserProfile = {
     return rows;
   },
 
-  // Single organizer's public profile — same eligibility rule as the
+  // Single organizer's public profile. Uses the same eligibility rule as the
   // directory (profile + >=1 published event), so a guessed user_id for
   // someone who isn't a real organizer just 404s.
   async findPublicByUserId(user_id) {
