@@ -46,7 +46,7 @@ function FindOrganizers() {
       <div className="fo-content">
         <div className="fo-header">
           <h1 className="fo-title">Find Organizers</h1>
-          <p className="fo-subtitle">Browse people who've published events on Eventify and see their track record.</p>
+          <p className="fo-subtitle">Browse people who've published events on Eventify, see their track record, and find the right organizer for your next event.</p>
         </div>
 
         <div className="fo-search-row">
