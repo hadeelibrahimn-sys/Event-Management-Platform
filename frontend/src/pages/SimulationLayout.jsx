@@ -527,3 +527,4 @@ export default function SimulationLayout() {
     </div>
   );
 }
+
