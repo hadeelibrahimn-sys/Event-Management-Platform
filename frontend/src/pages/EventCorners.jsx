@@ -14,7 +14,7 @@ const CORNER_PREVIEWS = [
   },
   {
     name: "Decorative Setup Corner",
-    desc: "A curated backdrop and styling corner — florals, balloons, and props.",
+    desc: "A curated backdrop and styling corner with florals, balloons, and props.",
     icon: (
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.6">
         <path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z" />
@@ -53,8 +53,8 @@ function EventCorners() {
           <span className="ec-badge">Coming Soon</span>
           <h1 className="ec-title">Event Corners</h1>
           <p className="ec-desc">
-            Event Corners is a curated collection of ready-made setups and stations —
-            coffee catering, decor, photo booths, and more — that you'll be able to add
+            Event Corners is a curated collection of ready-made setups and stations,
+            including coffee catering, decor, and photo booths, that you'll be able to add
             straight into your event. Each corner is put together and offered by Eventify
             itself, not an open marketplace of outside vendors.
           </p>
