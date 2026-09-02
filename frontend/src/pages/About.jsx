@@ -15,7 +15,7 @@ function About() {
 
           {/* Left: text */}
           <div className="about-hero-left">
-            <p className="about-label">ABOUT US ——</p>
+            <p className="about-label">ABOUT US</p>
             <h1 className="about-hero-title">
               Bringing People<br />
               Together Through<br />
@@ -70,7 +70,7 @@ function About() {
             <h2 className="who-title">Who We Are</h2>
             <p className="who-desc">
               Eventify was created to solve the challenges of fragmented event planning.
-              We bring everything together in one place — from finding the right services
+              We bring everything together in one place, from finding the right services
               to managing every detail of your event.
             </p>
             <p className="who-desc">
