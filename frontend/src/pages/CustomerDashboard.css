@@ -1,6 +1,4 @@
-/* ─────────────────────────────────────────
-   CustomerDashboard.css
-   ───────────────────────────────────────── */
+/* Customer Dashboard styles */
 
 .dashboard-page {
   height: 100vh;
@@ -12,7 +10,7 @@
   background: #f4f0fb;
 }
 
-/* ══ SIDEBAR ══ */
+/* SIDEBAR  */
 .dashboard-sidebar {
   width: 240px;
   flex-shrink: 0;
@@ -121,7 +119,7 @@
 
 .simulation-btn:hover { background: #6d28d9; }
 
-/* ══ MAIN CONTENT ══ */
+/* MAIN CONTENT */
 .dashboard-main {
   flex: 1;
   display: flex;

@@ -19,7 +19,7 @@
     gap: 24px;
   }
   
-  /* ── Header ── */
+  /* Header */
   .si-header {
     display: flex;
     align-items: center;
@@ -51,7 +51,7 @@
     margin: 0;
   }
   
-  /* ── Card ── */
+  /* Card */
   .si-card {
     width: 100%;
     max-width: 540px;
@@ -64,7 +64,7 @@
     gap: 28px;
   }
   
-  /* ── Step indicator ── */
+  /* Step indicator */
   .si-steps {
     display: flex;
     align-items: center;
@@ -114,7 +114,7 @@
     margin-bottom: 18px;
   }
   
-  /* ── Form ── */
+  /* Form */
   .si-form {
     display: flex;
     flex-direction: column;
@@ -307,7 +307,7 @@
   .si-continue-btn.ready:hover { background: #6d28d9; }
   .si-continue-btn:active { transform: scale(0.99); }
   
-  /* ── Categories ── */
+  /* Categories */
   .si-categories {
     display: flex;
     flex-direction: column;

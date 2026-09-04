@@ -1,11 +1,10 @@
-// Canonical event category taxonomy. This is the shared source of truth,
-// mirrored on the frontend at frontend/src/data/eventCategories.js. Keep both in sync.
-//
-// Organizers pick a specific, detailed category in CreateEvent. Every
-// detailed category belongs to exactly one broad group, which is what
-// ExploreEvents filters by. category_group is always derived server-side
-// from `category` via getCategoryGroup(). It is never trusted from the
-// client, so the mapping only has to be correct in one place per runtime.
+// Main event categories used by the backend and frontend.
+
+// Organizers choose a specific category when creating an event.
+
+// Each category belongs to one main group used by ExploreEvents.
+
+// The backend automatically finds the correct category group from the selected category.
 
 const EVENT_CATEGORIES = [
   {

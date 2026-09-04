@@ -12,7 +12,7 @@
     box-sizing: border-box;
   }
   
-  /* ── Navbar ── */
+  /* Navbar */
   .ce-navbar {
     display: flex;
     align-items: center;
@@ -79,7 +79,7 @@
     cursor: pointer;
   }
   
-  /* ── Content ── */
+  /* Content  */
   .ce-content {
     flex: 1;
     max-width: 900px;
@@ -92,7 +92,7 @@
     box-sizing: border-box;
   }
   
-  /* ── Hero ── */
+  /* Hero  */
   .ce-hero {
     display: flex;
     align-items: center;
@@ -171,7 +171,7 @@
   
   .ce-hero-right { flex-shrink: 0; }
   
-  /* ── Sections ── */
+  /* Sections */
   .ce-section {
     background: white;
     border-radius: 16px;
@@ -201,7 +201,7 @@
     margin: -8px 0 0 0;
   }
   
-  /* ── Form fields ── */
+  /* Form fields  */
   .ce-row {
     display: flex;
     gap: 16px;
@@ -276,7 +276,7 @@
     margin-top: -8px;
   }
   
-  /* ── Format cards ── */
+  /* Format cards */
   .ce-format-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -383,7 +383,7 @@
     margin: 0;
   }
   
-  /* ── Footer buttons ── */
+  /* Footer buttons */
   .ce-footer-btns {
     display: flex;
     justify-content: flex-end;

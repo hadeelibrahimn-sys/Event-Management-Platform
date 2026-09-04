@@ -1,11 +1,8 @@
-/* Tile-based floor plan model for the in-3D Custom Layout builder.
-   Pure logic, no Three.js/React dependency, so it's easy to reason about and test.
-
-   A room is a set of occupied 1-tile cells on an integer grid (i, j).
-   Walls are derived automatically from tile occupancy: any edge between an
-   occupied tile and an unoccupied (or out-of-bounds) neighbor becomes a
-   boundary wall. Consecutive collinear boundary edges are merged into a
-   single wall segment for rendering/editing, splitting at any door. */
+/* Logic for the Custom Layout floor plan.
+   The room is built using grid tiles.
+   Walls are created automatically around the room.
+   Connected wall sections are combined to make editing and rendering easier.
+*/
 
 export const TILE_SIZE = 2; // meters
 
@@ -15,8 +12,8 @@ export const parseTileKey = (k) => {
   return { i, j };
 };
 
-/* Default starting footprint: a rectangle roughly matching the width/length
-   chosen on the Layout step, centered on the origin. */
+/* Default starting layout based on the selected room size,
+   centered in the workspace. */
 export function initialTiles(width, length) {
   const halfI = Math.max(1, Math.round(width / TILE_SIZE / 2));
   const halfJ = Math.max(1, Math.round(length / TILE_SIZE / 2));
@@ -76,13 +73,8 @@ export function frontierTiles(tileSet) {
   return Array.from(frontier);
 }
 
-/* BFS reachability. Returns true if every tile in the set can be reached from
-   every other tile through 4-directional neighbors. Used to block removing
-   a tile that would split the room into two disconnected pieces. Walls
-   render fine either way (computeBoundaryEdges/mergeEdgesIntoSegments don't
-   care about connectivity), but a floating second room isn't a shape anyone
-   building this actually wants, so it's stopped at the removal step rather
-   than allowed to render and confuse people. */
+/* Checks that all room tiles stay connected.
+   This prevents removing a tile if it would split the room into separate parts.*/
 export function isConnected(tileKeys) {
   const keys = Array.isArray(tileKeys) ? tileKeys : Array.from(tileKeys);
   if (keys.length <= 1) return true;
@@ -100,11 +92,8 @@ export function isConnected(tileKeys) {
   return seen.size === keys.length;
 }
 
-/* Merge collinear, contiguous boundary edges into wall segments.
-   A run breaks wherever an edge has a door or a window. That edge becomes
-   its own single-edge "door"/"window" segment instead of merging with its
-   neighbors (an edge is never both; callers are expected to keep the two
-   key sets disjoint). */
+/* Combines connected wall edges into larger wall sections.
+   Door and window edges stay separate so they can be handled correctly. */
 export function mergeEdgesIntoSegments(edges, doorEdgeKeys, windowEdgeKeys) {
   const isDoor = (key) => doorEdgeKeys && doorEdgeKeys.has(key);
   const isWindow = (key) => windowEdgeKeys && windowEdgeKeys.has(key);
@@ -157,8 +146,8 @@ export function mergeEdgesIntoSegments(edges, doorEdgeKeys, windowEdgeKeys) {
   return segments.map(s => ({ ...s, id: `${s.orientation}-${s.edgeKeys[0]}` }));
 }
 
-/* Nearest edge key within a segment to a given world point. Used to know
-   which specific 1-tile edge a door/window toggle should apply to. */
+/* Finds the closest wall edge to a selected point.
+   This is used when adding or removing a door or window.*/
 export function nearestEdgeInSegment(segment, x, z) {
   if (segment.isDoor || segment.isWindow) return segment.edgeKeys[0];
   const edges = [];

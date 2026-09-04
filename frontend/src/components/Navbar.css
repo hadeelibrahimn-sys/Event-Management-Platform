@@ -12,7 +12,7 @@
   flex-shrink: 0;
 }
 
-/* Logo â€” image replaces old coded C icon */
+/* The logo image replaces the old C icon */
 .logo {
   display: flex;
   align-items: center;

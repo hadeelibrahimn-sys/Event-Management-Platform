@@ -1,16 +1,16 @@
--- Eventify demo/test seed data
--- Run after schema.sql: mysql -u root -p eventify < backend/db/seed.sql
---
--- Creates one demo organizer account (if it doesn't already exist) and a
--- handful of published events — one per broad category group — so
--- ExploreEvents/EventDetails have real data to render during development.
--- category_group values here must match backend/utils/eventCategories.js
--- (normally the API computes category_group automatically on save; this
--- file inserts directly, so it sets both columns explicitly).
---
--- The demo account's password hash below is a placeholder valid bcrypt
--- hash — it is not meant to be used to log in, it only exists to satisfy
--- the events.organizer_id foreign key.
+-- Eventify demo and test data
+
+-- Run this file after schema.sql:
+-- mysql -u root -p eventify < backend/db/seed.sql
+
+-- Creates a demo organizer account if it does not already exist.
+
+-- Adds published events for the main event categories so the event pages have data during development.
+
+-- category_group values should match backend/utils/eventCategories.js.
+
+-- The demo account password is only a placeholder.
+-- It is included to support the organizer_id connection and is not intended for login.
 
 INSERT INTO users (full_name, email, password, role)
 SELECT 'Demo Organizer', 'demo.organizer@eventify.local',

@@ -10,12 +10,10 @@ const STORAGE_KEYS = {
   eventType: "eventify_sim_event_type",
 };
 
-/* Event types (docs/customization-system-design.md §5).
-   Used later, in the workspace, to rank the object library so relevant
-   items surface first. Nothing is ever hidden based on this choice.
-   Mirrors the broad category groups used across the platform
-   (frontend/src/data/eventCategories.js) so "event type" here and
-   "category" elsewhere stay conceptually aligned. */
+/* Event types used to show the most relevant objects first.
+   All objects are still available in the workspace.
+   These types match the main event categories used across Eventify.
+   */
 const EVENT_TYPES = [
   { id: "education",    label: "Education",    emoji: "\u{1F393}" },
   { id: "celebration",  label: "Celebration",  emoji: "\u{1F389}" },

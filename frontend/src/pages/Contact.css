@@ -43,7 +43,7 @@
   position: absolute;
   bottom: 20%;
   right: 40%;
-  width: 50%;        /* ← limit width to left half only */
+  width: 50%;        /*  limit width to left half only */
   display: flex;
   flex-direction: column;
   gap: 12px;

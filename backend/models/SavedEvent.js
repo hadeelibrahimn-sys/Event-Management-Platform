@@ -41,8 +41,8 @@ const SavedEvent = {
     return rows;
   },
 
-  // Just the event_ids. This is a cheap way for a list page (ExploreEvents) to
-  // mark which of the events it's already showing are saved, without an N+1.
+// Returns the IDs of events the user has saved.
+// This helps ExploreEvents show the saved state without making extra requests for each event.
   async findEventIdsByUser(user_id) {
     const [rows] = await db.execute(
       'SELECT event_id FROM saved_events WHERE user_id = ?',

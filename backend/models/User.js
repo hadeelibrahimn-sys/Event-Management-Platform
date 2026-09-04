@@ -45,8 +45,8 @@ const User = {
     return this.findById(user_id);
   },
 
-  // Unlike findById, this deliberately includes the password hash.
-  // It's only for internal use, to verify the current password before a change.
+// Includes the password hash for internal password checks.
+// This is used to verify the current password before changing it.
   async findByIdWithPassword(user_id) {
     const [rows] = await db.execute('SELECT * FROM users WHERE user_id = ?', [user_id]);
     return rows[0] || null;

@@ -1,7 +1,4 @@
-/* ─────────────────────────────────────────
-   About.css — matches Figma About Us page
-   ───────────────────────────────────────── */
-
+/* About page styles */
    .about-page {
     width: 100%;
     min-height: 100vh;
@@ -17,8 +14,8 @@
     flex-direction: column;
     padding: 0 60px;
   }
-  
-  /* ══ SECTION 1 — Hero ══ */
+
+/* Hero section */
   .about-hero {
     display: flex;
     align-items: flex-start;
@@ -115,7 +112,7 @@
     margin: 0;
   }
   
-  /* ══ SECTION 2 — Who We Are ══ */
+/* Who We Are section */
   .about-who {
     display: flex;
     align-items: center;
@@ -160,7 +157,7 @@
     margin: 0;
   }
   
-  /* ══ SECTION 3 — What We Do ══ */
+/* What We Do section */
   .about-what {
     padding: 32px 0 48px;
     display: flex;

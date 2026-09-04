@@ -8,11 +8,11 @@ const formatDate = (dateStr) => {
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
 };
 
-// Shared event card used by both ExploreEvents and SavedEvents so the two
-// pages don't drift into two different card designs. `saved`/`onToggleSave`
-// are optional. Pages that don't care about the save state (there are
-// none right now, but future ones might) can simply omit them, and no heart
-// button is rendered.
+// This event card is used in both ExploreEvents and SavedEvents
+// so both pages keep the same design.
+// saved and onToggleSave are optional.
+// If they are not provided, the heart button will not appear.
+
 function EventCard({ event, saved = false, onToggleSave, savePending = false }) {
   const navigate = useNavigate();
 

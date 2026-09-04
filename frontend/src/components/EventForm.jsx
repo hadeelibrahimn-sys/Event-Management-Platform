@@ -1,11 +1,12 @@
 import { EVENT_CATEGORIES } from "../data/eventCategories";
 import "../pages/CreateEvent.css";
 
-// Shared event form used by both CreateEvent and EditEvent. It covers every
-// field that maps to the events table (title, category, description,
-// format, venue, dates/times, participants, image). The pages around this
-// component own the navbar/hero and decide what "save" actually means
-// (POST vs PUT) and how the two footer buttons are labeled.
+
+// This event form is used in both CreateEvent and EditEvent.
+// It includes all the main event details such as title, category,
+// description, format, venue, dates, participants and image.
+// Each page handles how the event is saved and how the buttons are shown.
+
 function EventForm({
   form,
   onChange,

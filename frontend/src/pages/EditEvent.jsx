@@ -19,8 +19,7 @@ const EMPTY_FORM = {
   imageUrl: "",
 };
 
-// The API stores dates as full ISO timestamps and times as "HH:MM:SS".
-// HTML date/time inputs need "YYYY-MM-DD" and "HH:MM".
+// Formats API dates and times so they work correctly with HTML date and time inputs.
 const toDateInput = (value) => (value ? String(value).slice(0, 10) : "");
 const toTimeInput = (value) => (value ? String(value).slice(0, 5) : "");
 

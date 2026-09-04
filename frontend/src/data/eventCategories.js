@@ -1,12 +1,7 @@
-// Canonical event category taxonomy. This is the shared source of truth
-// and is mirrored on the backend at backend/utils/eventCategories.js, so
-// keep both in sync.
-//
-// Organizers pick a specific, detailed category in CreateEvent. Every
-// detailed category belongs to exactly one broad group, which is what
-// ExploreEvents filters by. The backend derives category_group from
-// `category` itself on save, so this file is used here purely to render
-// the grouped dropdown and the Explore filter chips.
+// These are the main event categories used across Eventify.
+// Organizers choose a specific category when creating an event.
+// Each category belongs to one main group used in ExploreEvents.
+// The backend saves the correct category group automatically.
 
 export const EVENT_CATEGORIES = [
   {

@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-/* ── Top bar ── */
+/* Top bar */
 .dw-topbar {
   display: flex;
   align-items: center;
@@ -105,7 +105,7 @@
 }
 .dw-toggle-wall-btn.on { color: #7c3aed; border-color: #7c3aed; background: #f5f0ff; }
 
-/* ── Custom floor plan: hint banner ── */
+/* Custom floor plan: hint banner */
 .dw-floorplan-hint {
   display: flex;
   align-items: center;
@@ -130,13 +130,10 @@
 }
 .dw-floorplan-hint-close:hover { opacity: 1; }
 
-/* ── Unified object popover — one editing surface for every selectable
-   object (structural or not), per docs/customization-system-design.md §2 ── */
+/* Object editing menu for all selectable items. */
 .dw-object-popover {
   position: fixed;
-  /* Anchored beside the click point (not on top of it) so the selected
-     object stays visible while its settings are open — see the
-     positioning logic in the useLayoutEffect that sets this at runtime. */
+/* Shows the settings beside the selected object so it stays visible while editing. */
   transform: translate(18px, -50%);
   background: white;
   border-radius: 12px;
@@ -144,8 +141,8 @@
   padding: 12px 14px;
   z-index: 400;
   width: 190px;
-  /* Safety net for popovers taller than the viewport even after the
-     on-screen clamp below has done its best — scroll rather than clip. */
+
+/* Allows scrolling if the menu is taller than the screen. */
   max-height: calc(100vh - 20px);
   overflow-y: auto;
   font-family: 'Poppins', sans-serif;
@@ -218,8 +215,7 @@
   padding: 0;
 }
 .dw-object-popover-swatch.active { outline: 2px solid #7c3aed; outline-offset: 2px; }
-/* Near-white swatches barely register against the white popover background
-   with the default faint border, so give them a slightly stronger one. */
+/* Adds a clearer border to very light colors so they are easier to see. */
 .dw-object-popover-swatch-white { border-color: rgba(0, 0, 0, 0.22); }
 .dw-object-popover-color-input {
   width: 20px;
@@ -341,7 +337,7 @@
 }
 .dw-object-popover-close:hover { color: #555; }
 
-/* ── Advanced Edit Mode ── */
+/* Advanced Edit Mode */
 .dw-object-popover-advanced-btn {
   width: 100%;
   padding: 8px;
@@ -395,10 +391,7 @@
 }
 .dw-advanced-banner-done:hover { background: #f0ecfa; }
 
-/* ── Event Editing Mode banner — same pill shape/position as the Advanced
-   Edit banner above (the two are mutually exclusive) but in a distinct
-   blue/teal so it reads as a different mode at a glance rather than a
-   variant of the same one. ── */
+/* Event Editing Mode banner with a different color to clearly show the active mode. */
 .dw-fp-banner {
   position: fixed;
   top: 16px;
@@ -481,7 +474,7 @@
 }
 .dw-part-panel-deselect:hover { border-color: #7c3aed; }
 
-/* ── Workspace ── */
+/* Workspace */
 .dw-workspace {
   flex: 1;
   display: flex;
@@ -489,7 +482,7 @@
   min-height: 0;
 }
 
-/* ── Left panel ── */
+/* Left panel */
 .dw-elements-panel {
   width: 195px;
   flex-shrink: 0;
@@ -701,8 +694,7 @@
   display: block;
 }
 .dw-3d-mount:active { cursor: grabbing; }
-/* Event Editing Mode: "grab to orbit" no longer applies — the pointer is
-   either locked (browser hides it entirely) or free for the popover UI. */
+/* Event Editing Mode uses a free pointer for editing and menu controls. */
 .dw-3d-mount.fp-mode, .dw-3d-mount.fp-mode:active { cursor: default; }
 .dw-3d-mount canvas { display: block; width: 100% !important; height: 100% !important; }
 

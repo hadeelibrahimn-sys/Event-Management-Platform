@@ -19,8 +19,7 @@ function EventDetails() {
   const [bookingError, setBookingError] = useState("");
   const [bookingResult, setBookingResult] = useState(null);
 
-  // Clear the router state once captured so refreshing/back-navigating
-  // doesn't re-show the same success message.
+ // Clears the saved message so it does not appear again after refreshing or going back.
   useEffect(() => {
     if (location.state?.flash) {
       navigate(location.pathname, { replace: true, state: {} });

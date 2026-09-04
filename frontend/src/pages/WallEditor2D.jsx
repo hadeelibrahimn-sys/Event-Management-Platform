@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./WallEditor2D.css";
 
-/* World coordinates are centered on the room, matching the 3D workspace:
-   x ∈ [-width/2, width/2],  z ∈ [-length/2, length/2] (z = depth). */
+/* The room uses centered coordinates to match the 3D workspace. */
 
 const GRID = 0.5;          // snap size in meters
 const MIN_WALL_LEN = 0.4;  // ignore accidental micro-drags
@@ -21,7 +20,7 @@ const genId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 const snap = (v) => Math.round(v / GRID) * GRID;
 const dist = (x1, z1, x2, z2) => Math.hypot(x2 - x1, z2 - z1);
 
-/* Distance from point p to segment (a-b), plus the clamped projection t (0..1) */
+/* Calculates the distance from a point to a line segment. */
 function pointToSegment(px, pz, x1, z1, x2, z2) {
   const dx = x2 - x1, dz = z2 - z1;
   const lenSq = dx * dx + dz * dz;

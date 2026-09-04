@@ -13,10 +13,10 @@ CREATE TABLE IF NOT EXISTS users (
   created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Saved 3D layouts from the Simulation Tool (DesignWorkspace).
--- event_id is intentionally nullable with no FK constraint for now —
--- the Events table/backend connection is still pending, so a simulation
--- can be saved standalone and linked to an event later.
+-- Saved 3D layouts from the Simulation Tool.
+
+-- event_id can be empty for now because the Events connection is not finished.
+-- A simulation can be saved first and linked to an event later.
 CREATE TABLE IF NOT EXISTS visual_simulations (
   simulation_id   INT AUTO_INCREMENT PRIMARY KEY,
   user_id         INT NOT NULL,
@@ -40,13 +40,15 @@ CREATE TABLE IF NOT EXISTS visual_simulations (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- If you already ran this schema before the custom_geometry column existed,
--- run this once to add it to your existing table (MySQL 8.0.29+):
+-- If you used an older version of this schema, run this once to add custom_geometry.
+
 -- ALTER TABLE visual_simulations ADD COLUMN IF NOT EXISTS custom_geometry JSON NULL AFTER placed_items;
 
--- Events created by organizers (any user — there is no separate organizer
--- account type, a customer becomes an organizer simply by creating an event).
--- image_url is a plain string for now (v1) — real file upload is a later slice.
+-- Events created by users.
+-- A user becomes an organizer by creating an event.
+
+-- image_url stores the image path as text for now.
+-- File upload can be added later.
 CREATE TABLE IF NOT EXISTS events (
   event_id                INT AUTO_INCREMENT PRIMARY KEY,
   organizer_id             INT NOT NULL,
@@ -71,13 +73,12 @@ CREATE TABLE IF NOT EXISTS events (
     FOREIGN KEY (organizer_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- If you already ran this schema before category_group existed, run this
--- once to add it to your existing table (MySQL 8.0.29+):
+-- If you used an older version of this schema, run this once to add category_group.
+
 -- ALTER TABLE events ADD COLUMN IF NOT EXISTS category_group VARCHAR(50) NULL AFTER category;
 
--- A customer "favoriting" an event. Deliberately just a join table — no
--- extra columns beyond when it was saved. Deleting a user or an event
--- cascades and cleans up the corresponding saved_events rows automatically.
+-- Stores events saved by users.
+-- If a user or event is deleted, the related saved event records are removed automatically.
 CREATE TABLE IF NOT EXISTS saved_events (
   saved_id    INT AUTO_INCREMENT PRIMARY KEY,
   user_id     INT NOT NULL,
@@ -90,11 +91,13 @@ CREATE TABLE IF NOT EXISTS saved_events (
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
 );
 
--- Free RSVP-style bookings (v1 — no payment processing; see backend/models/
--- Booking.js). Cancelling sets status rather than deleting the row, so
--- capacity math and a user's booking history both stay intact. Rebooking
--- after a cancellation creates a new row rather than reactivating the old
--- one, by design, so the history reads cleanly.
+-- Stores free event bookings without payment processing.
+
+-- Cancelling a booking changes its status instead of deleting it.
+
+-- This keeps the booking history and capacity information available.
+
+-- Booking again after cancellation creates a new record.
 CREATE TABLE IF NOT EXISTS bookings (
   booking_id      INT AUTO_INCREMENT PRIMARY KEY,
   event_id        INT NOT NULL,
@@ -110,10 +113,11 @@ CREATE TABLE IF NOT EXISTS bookings (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- Optional, lightweight professional profile a user fills in to appear in
--- Find Organizers. Deliberately not merged into `users` — most users never
--- fill this in, and eligibility for the directory also requires at least
--- one published event (checked at query time, not stored here).
+-- Optional organizer profile used for the Find Organizers page.
+
+-- This information is stored separately because not every user needs an organizer profile.
+
+-- Users must also have at least one published event to appear in the organizer directory.
 CREATE TABLE IF NOT EXISTS organiser_profiles (
   organiser_profile_id  INT AUTO_INCREMENT PRIMARY KEY,
   user_id                INT NOT NULL UNIQUE,
@@ -128,11 +132,13 @@ CREATE TABLE IF NOT EXISTS organiser_profiles (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- Messaging (v1 — one-to-one only, no attachments, no real-time transport;
--- the thread page just re-fetches). conversation_participants is a proper
--- join table rather than two fixed user_id columns on `conversations` so
--- group conversations are a natural extension later — v1 application logic
--- just always keeps it to exactly two participants.
+-- Stores direct messages between two users.
+
+-- Messages are refreshed by loading the conversation again.
+
+-- Participants are stored in a separate table so group conversations can be added later.
+
+-- For now, each conversation has only two participants.
 CREATE TABLE IF NOT EXISTS conversations (
   conversation_id  INT AUTO_INCREMENT PRIMARY KEY,
   created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

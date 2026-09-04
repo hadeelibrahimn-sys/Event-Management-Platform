@@ -98,9 +98,11 @@ const Event = {
     return rows;
   },
 
-  // Simple content-based "recommendations": published events, optionally
-  // narrowed to one category_group, and excluding a given set of ids (events
-  // the user already saved, booked, or hosts). Not ML, just a filtered feed.
+// Shows recommended published events based on category.
+
+// Events the user already saved, booked, or created can be excluded.
+
+// This uses simple filtering rather than machine learning.
   async findRecommended({ excludeEventIds = [], group = null, limit = 4 } = {}) {
     let query = `SELECT * FROM events WHERE status = 'published'`;
     const params = [];

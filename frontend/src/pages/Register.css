@@ -5,7 +5,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: stretch;  /* ← change from center to stretch */
+    align-items: stretch;  /* change from center to stretch */
     overflow: hidden;
     box-sizing: border-box;
     background: linear-gradient(135deg, #c4aee8 0%, #d4b8e8 30%, #e8c4d8 65%, #f0c8c0 100%);
@@ -40,9 +40,9 @@
   
   .register-nav-links a:hover { opacity: 0.7; }
   
-  /* ── Main card — row layout ── */
+  /* Main card — row layout */
   .register-card {
-    align-self: center;  /* ← add this */
+    align-self: center;  /* add this */
     display: flex;
     flex-direction: row;
     width: 780px;
