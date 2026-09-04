@@ -1,18 +1,9 @@
-/* Occasional tables (reference sheet #8: fluted-plaster / marble /
-   wood / brass table grid). Extracted from Designworkspace.jsx.
-   Every silhouette on that sheet reduces to a tabletop (round, oval, or
-   rectangular) sitting on one of a handful of base "kinds": a single
-   turned pedestal column, two pedestal columns under an oval top, flat
-   slab legs (a tripod of three, a waterfall pair flush with the short
-   ends, or plain corner legs), a solid or fluted drum, three angled
-   tripod legs, a crossed X-frame, a thin ring-and-post frame, a four-post
-   cage frame, or a stack of shrinking spheres. TABLE_STYLES picks a
-   `kind` plus that kind's own params for each catalog variant, and
-   reuses the vase section's profileTapered/profileBottleNeck silhouette
-   helpers for the turned-column kinds rather than re-deriving that math.
-   Every mesh is tagged userData.part = "top" or "base" (never both), so
-   Advanced Edit can recolor/re-material the tabletop and the base
-   independently, whatever shape either one takes. */
+/* Creates different occasional table styles for the 3D workspace.
+
+   Tables use different top shapes and base designs.
+
+   The tabletop and base can be edited and colored separately.
+*/
 
 import * as THREE from "three";
 import { profileTapered, profileBottleNeck } from "./vases";
@@ -50,11 +41,9 @@ export function buildTableRevolve(profile, opts = {}) {
   return mesh;
 }
 
-// The wood/black-metal/gold/glass tones below already read as visibly
-// colored and are left alone. Only the cream/"marble" family (which used
-// to make a third of this table blur together in the list) gets shifted
-// to a richer, mutually-distinct tint per entry: a colored-lacquer or
-// tinted-stone finish instead of plain white/cream.
+// Keeps the existing wood, metal, gold and glass colors.
+
+// Similar cream and marble styles use different tints so they are easier to distinguish.
 export const TABLE_STYLES = {
   "pedestal-fluted-cream":  { kind: "pedestal", topShape: "round", topR: 0.68, height: 0.75, pedBaseR: 0.1, pedTopR: 0.095, ribCount: 16, ribDepth: 0.012, topColor: 0xb98a6f, baseColor: 0xb98a6f },
   "pedestal-hourglass":     { kind: "pedestal", topShape: "round", topR: 0.65, height: 0.74, profileFn: h => profileBottleNeck(h, 0.15, 0.2, 0.05, 0.09, 0.6), topColor: 0xcbb99e, baseColor: 0xcbb99e },
@@ -105,11 +94,10 @@ export const TABLE_STYLES = {
   "coffee-marble-gold-ring":  { kind: "ring", topShape: "round", topR: 0.62, height: 0.38, ringR: 0.32, tubeR: 0.022, topColor: 0x6f9b7a, baseColor: 0xC9A44C, baseMetalness: 0.7, baseRoughness: 0.3, topRoughness: 0.15 },
 };
 
-/* Assembles a full table (tabletop plus base) from the TABLE_STYLES table
-   for a given variant id. The tabletop is always tagged "top" and every
-   base component (however many meshes it takes) is tagged "base", so
-   Advanced Edit's per-part color/material controls always resolve to
-   exactly those two independently-editable pieces regardless of kind. */
+/* Builds a complete table using the selected style.
+
+   The tabletop and base are kept as separate editable parts.
+*/
 export function buildTable(variant) {
   const style = TABLE_STYLES[variant] || TABLE_STYLES["pedestal-fluted-cream"];
   const g = new THREE.Group();

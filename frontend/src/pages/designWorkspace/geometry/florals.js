@@ -1,37 +1,22 @@
-/* Floral and foliage geometry (flowers, bouquets, greenery stems, potted
-   plants). Extracted from Designworkspace.jsx. */
+/* Creates flowers, bouquets, greenery and potted plants for the 3D workspace. */
 
 import * as THREE from "three";
 
-/* Flower geometry, shared by every flower-cluster and floral-swag
-   catalog entry (see below).
-   A single faceted low-poly sphere (the original approach here) reads as
-   a chunk of gravel, not a flower. There's no petal structure at all, so
-   any color still looks like a rock. buildFlowerHead instead builds a
-   small rounded, layered bloom: a ring of overlapping smooth-shaded
-   "petal" spheres around the base, a smaller inner ring, and a slightly
-   raised center. This is cheap (9 small spheres, low segment counts) but
-   reads as an actual rose/peony head at the scale these are used, especially
-   once several are packed together into a cluster or garland. It cycles
-   through a small palette of near-white shades by index rather than one
-   fixed color, so a freshly-placed arrangement reads as a natural mixed
-   white/ivory/cream blend by default. applyItemMaterial's per-part color
-   override (Advanced Edit → "Flowers") still recolors every petal to one
-   uniform shade the instant the user picks one, the same mechanism as every
-   other multi-mesh part in this file. Note that picking a color from the
-   *standard* (whole-object) popover instead of Advanced Edit's per-part
-   swatches will flatten blooms and leaves to the same single color, same
-   as it does for every other multi-part item. Advanced Edit is what
-   keeps them independently white/green. */
+/* Creates flower heads used in floral arrangements.
+
+   Each flower is built from small layered shapes to give it a more natural look.
+
+   Different light shades are used by default, while Advanced Edit can recolor the flower parts.
+*/
 export const FLORAL_BLOOM_PALETTE = [0xffffff, 0xfdf6e9, 0xf7f0e3, 0xfffdf8, 0xf3ead9];
 
 export function buildFlowerHead(size, index, part) {
   const g = new THREE.Group();
   const color = FLORAL_BLOOM_PALETTE[index % FLORAL_BLOOM_PALETTE.length];
   const petalMat = () => new THREE.MeshStandardMaterial({ color, roughness: 0.7 });
-  // A per-bloom rotation offset derived from `index`, not Math.random(),
-  // for the same rebuild-stability reasons as elsewhere in this file, so
-  // neighboring blooms don't all point their petals the same way.
+// Gives each flower a slightly different rotation.
+
+// The rotation stays consistent whenever the model is rebuilt.
   const spin = (index * 2.399963) % (Math.PI * 2); // Irrational-ish step avoids any visible repeating pattern
   const outer = 5;
   for (let j = 0; j < outer; j++) {
@@ -58,16 +43,12 @@ export function buildFlowerHead(size, index, part) {
   return g;
 }
 
-/* A mounded cluster of buildFlowerHead blooms, reused by both
-   flower-cluster catalog variants below. Laid out along an
-   upper-hemisphere-biased Fibonacci spiral rather than Math.random(),
-   since build3DObject can re-run on every color/material tweak or Advanced
-   Edit part-selection pass, and a randomized cluster would visibly
-   reshuffle on each one, so the layout has to be deterministic. `stemCount`
-   pokes a few thin twigs (tagged `stemPart`, default same as `part`) up
-   through the mass for the looser "spray" variant. The denser "bouquet"
-   variant passes 0 since none are visible in the reference sheet. Returns
-   a Group with base resting at y=0. */
+/* Creates a rounded cluster of flowers for bouquet and spray designs.
+
+   Flower positions stay consistent when the model is rebuilt.
+
+   Some variants can also include visible stems.
+*/
 export function buildFlowerCluster(part, opts = {}) {
   const {
     count = 24, radiusX = 0.3, radiusY = 0.24, radiusZ = 0.26,
@@ -116,9 +97,10 @@ export function buildFlowerCluster(part, opts = {}) {
   return g;
 }
 
-/* A thin stem with a few flattened, flat-shaded leaflets standing in for
-   the ferny foliage threaded through every arrangement on the reference
-   sheet. Cheap enough to scatter dozens per garland. */
+/* Creates a simple leafy stem used in floral arrangements.
+
+   The lightweight design makes it suitable for larger garlands and decorations.
+*/
 export function buildLeafSprig(length, part, color = 0x4d7c3f) {
   const g = new THREE.Group();
   const stem = new THREE.Mesh(
@@ -145,18 +127,12 @@ export function buildLeafSprig(length, part, color = 0x4d7c3f) {
   return g;
 }
 
-/* Threads blooms and leaf sprigs along an explicit list of world-space
-   points. This is the shared placer behind every garland/swag/cascade shape
-   below. Each shape's own path math (a shallow drape for a horizontal
-   swag, a semicircle for the arch garland, a straight drop for the
-   cascade...) lives in its own switch case; this just decorates whatever
-   points it's handed. `sizeAt(t)`/`bloomChance(t)` are functions of
-   position-along-path (t: 0..1) so a garland can taper into sparse
-   trailing foliage at its ends instead of blooms stopping abruptly.
-   Everything is index-derived rather than Math.random(), for the same
-   reasoning as buildFlowerCluster above: this can rebuild on every
-   color/material tweak, and a randomized layout would visibly reshuffle
-   each time. */
+/* Places flowers and leaves along a defined path.
+
+   Different paths are used to create garlands, swags and cascading arrangements.
+
+   Flower size and spacing can change along the path while staying consistent when rebuilt.
+*/
 export function buildFloralSwag(points, opts = {}) {
   const {
     bloomPart = "blooms", leafPart = "leaves",
@@ -177,10 +153,9 @@ export function buildFloralSwag(points, opts = {}) {
       const size = sizeAt(t) * (0.85 + ((i * 13) % 5) / 4 * 0.3);
       const bloom = buildFlowerHead(size, i, bloomPart);
       bloom.position.set(p.x, p.y, p.z);
-      // Yaw only. buildFlowerHead's petals splay outward from a raised
-      // center, so tipping it onto its side (a full X/Z tumble, which is
-      // harmless for a faceted ball but not for a bloom with a defined
-      // "up") would read as broken rather than just varied.
+// Rotates the flower only around the vertical axis.
+
+// This keeps the bloom upright while still giving each flower some variation.
       bloom.rotation.y = (i * 1.3) % (Math.PI * 2);
       g.add(bloom);
     }
@@ -198,12 +173,9 @@ export function buildFloralSwag(points, opts = {}) {
   return g;
 }
 
-/* Single greenery stems (reference sheet #5, foliage row).
-   One flexible builder driven by a per-variant style table instead of a
-   bespoke case per species. These are all "a stem with N small leaves
-   alternating up it," differing only in leaf shape/size/count/color, which
-   is exactly the kind of variation the catalog's type+variant system
-   (see the ELEMENTS comment near the top of this file) is meant for. */
+// Creates different greenery stem styles.
+
+// Each variant changes details such as leaf shape, size, amount and color.
 export const GREENERY_STEM_STYLES = {
   fern:               { leafShape: "frond",  color: 0x6fae5c, leafCount: 20, leafSize: 0.05,  height: 0.55 },
   "eucalyptus-silver": { leafShape: "disc",  color: 0xb9c9ad, leafCount: 10, leafSize: 0.045, height: 0.5  },
@@ -254,12 +226,10 @@ export function buildGreeneryStem(variant, part = "leaves") {
   return g;
 }
 
-/* Single flower stems (reference sheet #5, bloom row).
-   Same type+variant idea as buildGreeneryStem, one level up: a style table
-   picks a bloom language (a flat 5-petal "star" for orchids, tiny "pin"
-   florets scattered along fine twigs for baby's breath, a dense floret
-   spike for delphinium, or buildFlowerHead's layered rose head reused
-   as-is for lisianthus/carnation/rose) rather than one case per species. */
+/* Creates different single flower stem styles.
+
+   Each variant changes the flower shape and arrangement to match the selected type.
+*/
 export const FLOWER_STEM_STYLES = {
   orchid:         { bloom: "star",    count: 5,  size: 0.05,  height: 0.55, spread: 0.12 },
   lisianthus:     { bloom: "cluster", count: 4,  size: 0.045, height: 0.45, spread: 0.09 },
@@ -351,12 +321,10 @@ export function buildFlowerStem(variant, bloomPart = "blooms", leafPart = "leave
   return g;
 }
 
-/* Tied bouquets (reference sheet #5, top row).
-   A bundle of stems converging at a ribbon-wrapped tie point, topped with
-   whatever bloom composition the specific bouquet case builds. Shared
-   across all six bouquet catalog entries below so only the top (the part
-   that actually varies: cascade vs. round vs. tulip cups vs. calla
-   trumpets) needs its own code. */
+/* Creates tied bouquet designs with stems and a ribbon.
+
+   Each bouquet can use a different flower arrangement on top.
+*/
 export function buildBouquetStemBundle(count, height, part = "stems") {
   const g = new THREE.Group();
   for (let i = 0; i < count; i++) {
@@ -387,11 +355,10 @@ export function buildTulipBloom(size, index, part) {
   return bloom;
 }
 
-/* A lathe-revolved trumpet profile standing in for a calla lily's curled
-   single petal. Not radially accurate (a real calla is open on one side,
-   not a full surface of revolution) but reads correctly as "an elegant
-   white trumpet flower" at this scale, with a small yellow spadix spike
-   poking out the center the way the real flower's signature detail does. */
+/* Creates a simple trumpet shaped calla lily.
+
+   A small yellow center is added to make the flower easier to recognize.
+*/
 export function buildCallaBloom(size, part) {
   const profile = [
     new THREE.Vector2(0, 0),
@@ -418,16 +385,12 @@ export function buildCallaBloom(size, part) {
   return g;
 }
 
-/* Potted floor/foliage plants (reference sheet #4, houseplant grid).
-   Every entry is "a ceramic pot + a foliage composition," so like the
-   flower/greenery stems above, one flexible builder driven by a per-variant
-   style table stands in for a bespoke case per species. `leafShape` picks
-   which of the composition branches in buildPottedFoliage runs. Species
-   that share a growth habit (e.g. rubber plant/fiddle-leaf fig/dieffenbachia
-   all being "big glossy oval leaves alternating up a central trunk") share
-   a branch and differ only by color/count/size. Peace lily is intentionally
-   its own top-level type below (buildPeaceLily), not a variant here, since
-   it needs a `blooms` part the others don't. */
+/* Creates different potted plant styles.
+
+   Each variant changes details such as leaf shape, size, amount and color.
+
+   Plants with different structures, such as the peace lily, use their own builder.
+*/
 export function buildPlantPot(r, h, potStyle, color) {
   const g = new THREE.Group();
   const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.85 });
@@ -780,12 +743,10 @@ export function buildPottedPlant(variant) {
   return g;
 }
 
-/* Peace lily gets its own top-level type (rather than a potted-plant
-   variant) because it needs a fourth `blooms` part the others don't:
-   broad dark leaves plus a few white spathe blooms on thin stems above
-   the foliage. The spathe reuses buildCallaBloom's trumpet shape at a
-   smaller size since a peace lily's white spathe reads almost identically
-   to a calla lily's. */
+/* Creates a peace lily with leaves, stems and white flowers.
+
+   It uses its own builder because the flower parts are different from other potted plants.
+*/
 export function buildPeaceLily() {
   const g = new THREE.Group();
   const potR = 0.19, potH = 0.22;

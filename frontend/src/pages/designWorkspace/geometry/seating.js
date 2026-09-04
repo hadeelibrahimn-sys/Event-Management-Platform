@@ -1,12 +1,9 @@
-/* Chairs and Sofas (chiavari/cross-back/bentwood/tub chair grid plus the
-   curved/tufted/sectional sofa grid). Extracted from Designworkspace.jsx.
-   Same family-based approach as vases/rugs above: a handful of shared
-   part-builder helpers (legs, channel ribs, tuft buttons) plus one
-   dispatcher per broad shape family, driven by a small CHAIR_STYLES/
-   SOFA_STYLES params table, rather than 57 fully bespoke one-off meshes.
-   Every entry carries its own saturated color (never white/ivory) per the
-   catalog-wide visible-color rule, even though both reference sheets were
-   shot entirely in white/cream fabric. */
+/* Creates different chair and sofa styles for the 3D workspace.
+
+   Shared builders are reused for common parts such as legs, ribs and buttons.
+
+   Each style uses its own clear default color to make catalog items easier to distinguish.
+*/
 
 import * as THREE from "three";
 

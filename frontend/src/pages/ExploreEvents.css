@@ -65,7 +65,7 @@
     padding: 30px 40px 60px;
   }
   
-  /* ── Title ── */
+  /* Title */
   .explore-title {
     font-family: 'Poppins', sans-serif;
     font-size: 38px;
@@ -75,7 +75,7 @@
     text-align: center;
   }
   
-  /* ── Category buttons row ── */
+  /* Category buttons row */
   .explore-categories {
     display: flex;
     gap: 10px;
@@ -110,7 +110,7 @@
   .category-btn--food-drink      { background-color: #e8a878; }
   .category-btn--celebrations    { background-color: #e8a0c0; }
   
-  /* ── Filter boxes row ── */
+  /* Filter boxes row */
   .explore-filters {
     display: flex;
     gap: 14px;
@@ -185,7 +185,7 @@
   
   .explore-search-btn:hover { background-color: #4c1d95; }
   
-  /* ── Clear filters ── */
+  /* Clear filters */
   .explore-clear-btn {
     background-color: white;
     color: #1a0a3d;

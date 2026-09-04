@@ -1,13 +1,11 @@
-/* Shared item helpers: material/color application, per-part transforms,
-   lighting/camera presets, first-person pose math, capacity guidance.
-   Extracted from Designworkspace.jsx. */
+/* Shared helpers for item materials, colors, transforms, lighting, camera controls and capacity guidance. */
 
 import * as THREE from "three";
 import { MATERIAL_PRESETS, DEFAULT_MATERIAL } from "../catalog";
+/* Applies material and color changes to all parts of an object.
 
-/* Re-materials (and optionally recolors) every mesh in a built object.
-   Meshes tagged keepEmissive (glowing screens/bulbs) are left alone so
-   customizing a whole object's material doesn't kill its light source. */
+   Glowing parts keep their original material so their light effect is not removed.
+*/
 export function applyItemMaterial(obj, item) {
   const defaultPreset = MATERIAL_PRESETS[item.material] || MATERIAL_PRESETS[DEFAULT_MATERIAL];
   obj.traverse(c => {
@@ -30,11 +28,9 @@ export function applyItemMaterial(obj, item) {
     const resolvedColor = partColor || item.color;
     if (resolvedColor) {
       mat.color = new THREE.Color(resolvedColor);
-      // A user-picked color is a deliberate choice. Give it a self-lit
-      // floor so scene shading/shadows can't grey it out. Without this, a
-      // "pure white" pick still renders as flat mid-grey wherever the
-      // directional light doesn't hit it dead-on, since MeshStandardMaterial
-      // is fully at the mercy of scene lighting otherwise.
+// Keeps a user selected color clear and visible even in darker lighting.
+
+// This prevents bright colors such as white from appearing grey.
       mat.emissive = new THREE.Color(resolvedColor);
       mat.emissiveIntensity = 0.4;
     }
@@ -42,21 +38,12 @@ export function applyItemMaterial(obj, item) {
   });
 }
 
-/* Advanced Edit Phase 3. Applies a per-part position/rotation/scale offset
-   on top of whatever build3DObject already built. Every mesh sharing a
-   part tag gets re-parented into a fresh pivot Group (added at identity, so
-   nothing visually moves yet). The stored offset is then applied to that
-   pivot as a whole. That way a component's move/rotate/resize is relative
-   to where it was already built rather than needing every part's own
-   hand-authored origin hardcoded here.
+/* Applies position, rotation and size changes to individual object parts.
 
-   A part tag can be reused across more than one physical instance of the
-   same component. Both arches of a dual-arch backdrop are tagged "panel",
-   and all three window arches on the storefront are tagged "window", each
-   living under its own separate wrapper group. Meshes are therefore grouped
-   by (part, immediate parent) rather than by part alone, and each distinct
-   instance gets its own pivot carrying the same offset, so "nudge the
-   panel" moves every instance together instead of merging them into one. */
+   Each part keeps its original placement and receives the new changes from that position.
+
+   Repeated parts are handled separately while sharing the same edit settings.
+*/
 export function applyPartTransforms(obj, item) {
   if (!item.partTransforms) return;
   const groups = new Map(); // part -> Map(parent -> meshes[])
@@ -83,12 +70,11 @@ export function applyPartTransforms(obj, item) {
   });
 }
 
-/* These were previously too dim for MeshStandardMaterial's physically-based
-   shading model. A "white" object under ambient ~1.0-1.4 and a weak
-   directional light rendered as flat mid-grey rather than actual white.
-   Bumped up across the board so real whites read as white, with the tone
-   mapping/exposure set on the renderer below to keep colors from blowing
-   out. */
+/* Uses stronger lighting so white materials appear brighter and more natural.
+
+   Renderer settings help keep other colors balanced.
+*/
+
 export const lightingPresets = {
   Soft:    { ambient: 1.8,  dir: 1.0,  color: 0xffffff },
   Natural: { ambient: 1.6,  dir: 1.6,  color: 0xffffff },
@@ -102,13 +88,10 @@ export const viewPresets = {
   "Side View":  { theta: 1.57, phi: 0.2,  radius: 14 },
 };
 
-/* Event Editing Mode (first-person walkthrough).
-   A second, independent camera system alongside the orbit camera above.
-   updateCamera() always looks at a ground-level point (px, 0, pz) from a
-   spherical offset. There's no way to coax that model into a free-look
-   "stand here, face any direction" camera, so first-person gets its own
-   state (eye position + yaw/pitch) and its own per-frame driving code in
-   the render loop, entirely separate from orbitRef/updateCamera. */
+/* Handles the first person camera used in Event Editing Mode.
+
+   It uses separate position and viewing controls from the normal orbit camera.
+*/
 export const EYE_HEIGHT       = 1.65; // Meters, roughly average human eye height
 export const FP_WALK_SPEED     = 2.2;  // m/s
 export const FP_RUN_SPEED      = 4.6;  // m/s, Shift held
@@ -121,11 +104,10 @@ export const FP_FOV_MAX        = 80;
 export const FP_ENTER_DURATION = 900;
 export const FP_EXIT_DURATION  = 800;
 
-/* Pure pose conversions. Given an orbit state or a first-person state,
-   compute the raw {position, quaternion} the camera would have. Used only
-   to compute the start/end points of a camera transition (beginPoseTween,
-   defined below in the component). Neither function touches any live
-   camera or ref, so they're safe to call from anywhere. */
+ /* Calculates camera position and rotation for orbit and first person views.
+
+   These values are used when moving smoothly between camera modes.
+*/
 export function orbitPoseFor(o) {
   const pos = new THREE.Vector3(
     o.px + o.radius * Math.sin(o.theta) * Math.cos(o.phi),

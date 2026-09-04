@@ -64,10 +64,10 @@ export function generateTexture(type) {
 
   return new THREE.CanvasTexture(canvas);
 }
+/* Creates simple floor textures for wood and tile.
 
-/* Generate procedural floor textures using canvas.
-   1 = Wood (planks with grain streaks), 2 = Tile (grout-lined squares).
-   0/Plain is handled by callers by simply not applying a map. */
+   Plain floors do not use a texture.
+*/
 export function generateFloorTexture(type) {
   const canvas = document.createElement("canvas");
   canvas.width = 256; canvas.height = 256;

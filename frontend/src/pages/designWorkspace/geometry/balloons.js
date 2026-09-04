@@ -1,14 +1,8 @@
-/* Balloons. Extracted from Designworkspace.jsx.
-   There are two tiers of fidelity on purpose. The 8 standalone "hero"
-   balloons (row 1 of the reference sheet) get a real lathe-revolved or
-   puffed-panel body since they're viewed up close. Every garland, cluster,
-   arch, column, and wall composition (rows 2-4) is built from plain
-   SphereGeometry units instead. This matches the existing balloon-arch-bow
-   precedent above and performs better once counts run into the dozens per
-   object.
-   Every mesh is tagged with one of three generic parts (balloons/accent/trim)
-   so PART_LABELS.balloon covers all 29 variants with one shared dict. This is
-   the same convention used by table's top/base or rug's rug/pattern. */
+/* Creates different balloon designs for the 3D workspace.
+   Single balloons use more detailed shapes.
+   Larger balloon arrangements use simpler shapes to improve performance.
+   Balloon parts share common labels so the same editing options can be used across all designs.
+*/
 
 import * as THREE from "three";
 import { buildFlatPolygonPanel } from "./panelsSignsArt";
@@ -22,9 +16,8 @@ export function balloonHash(i) {
   return x - Math.floor(x);
 }
 
-// Classic round-balloon silhouette: wide round belly, pinched neck at the
-// top where the knot/string attaches. Uses the same {r,y} revolve technique
-// as the vase profiles above. LatheGeometry closes both poles automatically.
+// Creates a classic round balloon shape with a wide body and narrow top.
+// Uses the same shape method as the vase models.
 export function profileBalloon(r, h, neckR = r * 0.12) {
   return [
     new THREE.Vector2(0, 0),
@@ -45,9 +38,8 @@ export function buildBalloonBody(r, h, color) {
   return mesh;
 }
 
-// A single string/ribbon hanging from a shape's underside down to the
-// floor. The returned group is anchored so positioning it at y=len puts
-// its bottom exactly at the floor (y=0).
+// Creates a string or ribbon hanging from the bottom of an object.
+// It is positioned so the end reaches the floor.
 export function buildBalloonString(len, color) {
   const g = new THREE.Group();
   const s = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, len, 6), new THREE.MeshStandardMaterial({ color }));
@@ -66,9 +58,9 @@ export function buildBalloonGarlandUnit(x, y, z, r, color, part) {
   return m;
 }
 
-// Outline generators for the puffed-panel foil balloons. These are consumed
-// by the existing buildFlatPolygonPanel, which has safe, pre-verified
-// winding, so no new custom BufferGeometry winding needs to be derived here.
+// Creates the outline shapes used for foil balloons.
+
+// These outlines are passed to the existing panel builder.
 export function outlineHeart(scale, segs = 24) {
   const pts = [];
   for (let i = 0; i < segs; i++) {

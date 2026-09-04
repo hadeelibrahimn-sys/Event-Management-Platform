@@ -1,12 +1,9 @@
-/* Doors and windows: a structural, wall-mounted catalog of their own.
-   Deliberately NOT part of ELEMENTS/build3DObject. A door or window only
-   ever exists embedded in one specific wall edge (see customFloorPlan.js),
-   so it's addressed by edgeKey in the `doors`/`windows` state maps rather
-   than being a free-draggable placedItems entry. Each style is still built
-   from the same primitive boxes/cylinders/toruses as everything else.
-   An "opening" is just wall geometry that isn't drawn there, exactly like
-   the original single door style already did.
-   Extracted from Designworkspace.jsx. */
+/* Creates doors and windows that are attached directly to wall sections.
+
+   They are handled separately from normal workspace objects because they stay connected to a specific wall.
+
+   Each style is built using simple 3D shapes.
+*/
 
 import * as THREE from "three";
 import { MATERIAL_PRESETS } from "../catalog";
@@ -74,9 +71,10 @@ export function buildDoorHandle(kind, color) {
   return new THREE.Mesh(new THREE.SphereGeometry(0.025, 8, 8), mat);
 }
 
-/* A single leaf, centered on its own local origin so the caller can place
-   it at any offset from its hinge/track pivot. Can be a plain slab, a glass
-   pane in a thin frame, or a slab with two raised panel insets. */
+/* Creates a single door panel.
+
+   It can be a plain door, a glass door or a paneled door.
+*/
 export function buildDoorLeaf(leafW, leafH, opts) {
   const { color, glass, paneled } = opts;
   const group = new THREE.Group();
@@ -106,9 +104,10 @@ export function buildDoorLeaf(leafW, leafH, opts) {
   return group;
 }
 
-/* Builds one door, already positioned/rotated by the caller onto its wall
-   segment. Uses the same "skip the solid wall box, add a lintel + leaf"
-   trick the original single-style door used, with no CSG cutting anywhere. */
+/* Creates a door positioned on its wall section.
+
+   The wall opening is built without using complex geometry cutting.
+*/
 export function buildDoorGroup(len, wallHeight, wallThickness, doorData = {}) {
   const style = DOOR_STYLES[doorData.style] || DOOR_STYLES["modern-single"];
   const color = doorData.color || 0x8B5E3C;
@@ -199,11 +198,10 @@ export function buildDoorGroup(len, wallHeight, wallThickness, doorData = {}) {
 
   return group;
 }
+/* Creates a window inside a wall section.
 
-/* Builds one window: solid wall below the sill and above the header (both
-   plain boxes, same material/color the rest of that wall run would have
-   used), a frame, and a tinted glass pane filling the gap. Never a CSG
-   cutout; uses the same "just don't draw wall there" approach as the door. */
+   The window includes the wall space, frame and glass without using complex geometry cutting.
+*/
 export function buildWindowGroup(len, wallHeight, wallThickness, wallColor, windowData = {}) {
   const style = WINDOW_STYLES[windowData.style] || WINDOW_STYLES["standard"];
   const frameColor = windowData.frameColor || 0x3d2817;

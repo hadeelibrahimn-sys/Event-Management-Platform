@@ -1,24 +1,9 @@
-/* Ceramic vases (reference sheet #6, plain-ceramic vase grid).
-   Extracted from Designworkspace.jsx.
-   One unified ring-lofting mesh builder covers essentially every silhouette
-   on that sheet, driven entirely by the VASE_STYLES table below:
-     • `profile` (an array of {r, y} rings, bottom to top) is the vase's
-       vertical silhouette: a simple taper, a bulbous belly, a stacked-
-       bubble "snowman," a sine-wave undulation, a goblet's cup-on-a-stem...
-     • `ribCount`/`ribDepth` ripple the radius *around* the circumference
-       at every height (a cosine wave in theta) for fluted/ribbed grooves.
-       This is independent of the vertical silhouette, so any profile can
-       be plain or fluted.
-     • `radialSegments` + `flatShading` control facet resolution: high
-       segments + smooth shading reads as round ceramic; low segments
-       (6-8) + flat shading reads as a cut-gem/hexagonal facet instead.
-     • `twist` rotates each ring by an increasing angle with height, for
-       the spiral-twist column.
-     • `ruffleTop` perturbs only the rim ring's radius sinusoidally around
-       theta, for a wavy/ruffled opening.
-   Handles, the open-ring "donut" vase, and terrazzo speckling are the only
-   shapes that don't fit this single silhouette+ripple model, so those are
-   handled as small additions on top rather than forcing them into it. */
+/* Creates different ceramic vase styles for the 3D workspace.
+
+   Vase shapes are built from reusable profiles and can include details such as ribs, facets, twists and curved rims.
+
+   Special details such as handles and decorative patterns are added separately when needed.
+*/
 
 import * as THREE from "three";
 
@@ -204,9 +189,9 @@ export function buildVaseSpeckle(profile, color1, color2) {
   return g;
 }
 
-// Previously none of these 36 set their own `color`, so every vase fell
-// back to buildVase's one shared off-white and the whole category read as
-// identical in the list. Each now carries its own ceramic-glaze tone.
+// Gives each vase its own ceramic color.
+
+// This makes the different vase styles easier to distinguish in the catalog.
 export const VASE_STYLES = {
   "spiral-twist": { profile: profileTapered(0.5, 0.09, 0.075, { flareTop: 0.01 }), ribCount: 10, ribDepth: 0.018, radialSegments: 32, twist: Math.PI * 1.3, color: 0xc1666b },
   "fluted-tapered": { profile: profileTapered(0.48, 0.085, 0.07), ribCount: 14, ribDepth: 0.012, radialSegments: 40, color: 0x4a7c6f },
@@ -246,11 +231,10 @@ export const VASE_STYLES = {
   "terrazzo-speckle": { profile: profileTapered(0.36, 0.075, 0.07), roughness: 0.9, speckle: true, radialSegments: 24, color: 0x8a6a2e },
 };
 
-/* Assembles a full vase (body mesh plus handles/speckle, or an open ring in
-   place of a body) from the VASE_STYLES table for a given variant id.
-   Each variant now carries its own default ceramic-glaze color (see note
-   above). Advanced Edit / the standard color picker can still override it
-   via the `body` part like any other item. */
+/* Builds a complete vase using the selected style.
+
+   Each vase uses its own default color and can still be recolored through the editing controls.
+*/
 export function buildVase(variant) {
   const style = VASE_STYLES[variant] || VASE_STYLES["bulbous-round"];
   const g = new THREE.Group();

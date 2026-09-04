@@ -19,15 +19,12 @@ export function generateBrandingTexture(text, font, fontSize, color) {
   return tex;
 }
 
-/* A thin transparent plane with the booth's name painted on, like vinyl
-   lettering directly on the front face, matching the reference photos.
-   This is used instead of a separate raised sign panel. Returns null when
-   there's no text yet so a blank white rectangle doesn't float on every
-   fresh booth.
-   Position is looked up by "type:variant" first (for type+variant families
-   like backdrop-panel/welcome-sign, where each variant is a genuinely
-   different height/depth), falling back to plain `type` for the older
-   one-shape-per-type stations that predate variants. */
+/* Adds the booth name to the front of the object.
+
+   No label is shown when there is no text.
+
+   The label position is based on the object type and variant.
+*/
 export function buildBrandingPanel(branding, type, variant) {
   if (!branding || !branding.text || !branding.text.trim()) return null;
   const tex = generateBrandingTexture(branding.text, branding.font, branding.fontSize, branding.color);
@@ -40,11 +37,10 @@ export function buildBrandingPanel(branding, type, variant) {
   return mesh;
 }
 
-/* A stylized rounded-top arch: a rectangular body capped with a squashed
-   dome. Reused by every arch-shaped backdrop/booth/storefront type below
-   instead of hand-building the same silhouette repeatedly. Returns a Group
-   positioned so its base sits at y=0, with every mesh inside tagged with
-   the given part name for per-part coloring. */
+/* Creates a rounded arch shape used by different backdrops, booths and storefronts.
+
+   The shape starts at floor level and its parts can be colored separately.
+*/
 export function buildArchPanel(width, height, depth, color, part) {
   const g = new THREE.Group();
   const capH = width / 2;
@@ -66,12 +62,10 @@ export function buildArchPanel(width, height, depth, color, part) {
   return g;
 }
 
-/* A single cylinder with reduced radial segments and flat shading instead of
-   the usual smooth 20-24 segment cylinder. The visible facets read as
-   fluted/reeded ribbing (pedestals, vases, bowls in the reference sheet)
-   without hand-building individual grooves. This is cheap, and the faceting
-   survives applyItemMaterial's material.clone() since flatShading is a
-   material property. */
+/* Creates a faceted cylinder used for ribbed objects such as pedestals, vases and bowls.
+
+   The simpler shape gives a fluted look while keeping the model lightweight.
+*/
 export function buildFlutedCylinder(radiusTop, radiusBottom, height, color, part, segments = 16) {
   const mesh = new THREE.Mesh(
     new THREE.CylinderGeometry(radiusTop, radiusBottom, height, segments, 1),
@@ -81,10 +75,10 @@ export function buildFlutedCylinder(radiusTop, radiusBottom, height, color, part
   return mesh;
 }
 
-/* A flat panel built from a row of thin vertical dowels rather than a solid
-   slab. Reads as reeded/fluted wood paneling (the ribbed arches and wall
-   panel in the reference sheet). Returns a Group centered on X, base at
-   y=0, bulging toward +z (the object's front). */
+/* Creates a ribbed panel using thin vertical pieces.
+
+   The panel is centered and starts from floor level.
+*/
 export function buildFlutedPanel(width, height, color, part, ribCount = 12) {
   const g = new THREE.Group();
   const ribR = (width / ribCount) / 2;

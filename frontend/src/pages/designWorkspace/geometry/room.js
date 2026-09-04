@@ -126,16 +126,10 @@ export function buildRoom(layoutId, RW, RD, RH, wallColor, floorColor, wallMatsR
 }
 
 
-/* Frees the GPU-side resources (geometry, material(s), any texture maps;
-   branding panels and floor/wall texture presets both use one) under a
-   mesh/group before it's dropped from the scene. Without this, every
-   rebuild (color pick, part edit, adding an item, editing the floor) piles
-   up more undisposed geometries/materials/textures on top of the last.
-   This looks harmless at first, but it compounds with every interaction
-   and eventually exhausts the WebGL context. Shared by clearGroup (the tile
-   floor plan) and the furniture sync effect (placedItems to scene) below,
-   which used to each roll their own (or, in the furniture case, skip
-   disposal entirely). */
+/* Removes unused 3D resources when objects are rebuilt or removed.
+
+   This helps prevent memory problems during repeated editing.
+*/
 export function disposeObject3D(obj) {
   obj.traverse?.(c => {
     if (!c.isMesh) return;

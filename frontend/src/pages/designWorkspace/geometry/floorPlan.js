@@ -1,5 +1,4 @@
-/* Custom layout: tile-based floor plan geometry, wall-mount snapping.
-   Extracted from Designworkspace.jsx. */
+/* Handles the custom floor layout and wall object placement. */
 
 import * as THREE from "three";
 import * as CFP from "../../customFloorPlan";
@@ -7,14 +6,12 @@ import { disposeObject3D } from "./room";
 import { generateFloorTexture } from "./textures";
 import { buildDoorGroup, buildWindowGroup } from "./doorsWindows";
 
-/* Wall-mounted catalog items (wall art / paintings).
-   Unlike doors/windows, these stay regular placedItems (draggable,
-   colorable, deletable through the normal furniture popover). The only
-   difference is where they're allowed to sit: always flush against the
-   nearest wall at a fixed hang height, facing into the room, rather than
-   free-standing on the floor. computeWallSnap works against either wall
-   model in this file: the auto-derived tile-plan walls (Custom Layout) or
-   the fixed rectangular room's four walls. */
+/* Handles wall mounted items such as artwork and paintings.
+
+   These items can still be moved, colored and deleted normally.
+
+   They stay attached to the nearest wall at a fixed height and face into the room.
+*/
 export const WALL_MOUNT_TYPES = new Set(["wall-art"]);
 export const WALL_ART_HANG_Y = 1.0;   // Meters, bottom edge of the frame. Combined with each style's ~0.9-0.95m height, this centers most pieces close to real-gallery eye level.
 export const WALL_MOUNT_GAP = 0.04;   // Clearance off the wall surface so the frame never z-fights/clips into it
@@ -27,14 +24,12 @@ export function nearestPointOnSegment(x, z, x1, z1, x2, z2) {
   return { x: x1 + t * dx, z: z1 + t * dz };
 }
 
-/* Closest point on any wall to (x, z), plus the rotation that makes a
-   wall-mounted item's front face (local +z, the same convention every
-   frame/canvas mesh in this file already uses) point back into the room.
-   The "into the room" direction is simply wall-point to (x, z): whichever
-   side the item is being dropped/dragged from is, by definition, the
-   room side, so no tile-occupancy analysis is needed. Door/window edges
-   are skipped as mount surfaces whenever a plain wall edge also exists,
-   since hanging a painting across an open doorway doesn't make sense. */
+/* Finds the nearest wall position for a wall mounted item.
+
+   The item is rotated to face into the room.
+
+   Door and window sections are avoided when another wall section is available.
+*/
 export function computeWallSnap(x, z, opts) {
   const { isCustom, floorTiles, doors, windows, RW, RD, wallThickness = 0.15 } = opts;
   let best = null, bestD = Infinity;
@@ -80,10 +75,9 @@ export function buildFloorPlanGeometry(group, tileSet, wallStyles, doors, window
   const doorEdgeKeys = new Set(Object.keys(doors).filter(k => doors[k]));
   const windowEdgeKeys = new Set(Object.keys(windows || {}).filter(k => windows[k]));
 
-  // One shared texture (if any) reused across every tile's material.
-  // Each tile shows one full repeat of the pattern rather than a
-  // continuous grain across tile seams, which is a fine simplification
-  // for a final-polish texture pass.
+// Reuses the same texture across all floor tiles.
+
+// Each tile shows the full pattern separately.
   const floorTex = floorTexture ? generateFloorTexture(floorTexture) : null;
 
   // Occupied floor tiles

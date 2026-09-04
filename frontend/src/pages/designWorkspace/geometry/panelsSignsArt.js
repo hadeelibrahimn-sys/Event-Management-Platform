@@ -1,19 +1,11 @@
-/* Backdrop panels, welcome signs and wall art (reference sheet #10).
-   Extracted from Designworkspace.jsx.
-   Panels/signs reuse the arch/fluted-panel builders already defined above
-   for the coffee-corner backdrops. The handful of silhouettes those don't
-   cover (a corner-rounded or diagonally-cut panel, a wavy top edge) go
-   through buildFlatPolygonPanel: an explicit list of {x,y} outline points
-   placed by hand, with front/back/sides extruded manually, rather than
-   guessing a THREE.Shape arc's sweep direction. Same reasoning as the
-   verified winding used for the rug/table grids above, with DoubleSide
-   left on as a safety net either way. Every panel/sign/art piece stands
-   with its base at y=0, matching every other floor-placed catalog item.
-   Welcome signs (and panels) additionally hook into the existing
-   BRANDABLE_TYPES/BRANDING_PANEL_POS text system. "Written on" is the
-   same vinyl-lettering-texture mechanism the coffee booth's signage
-   already uses, just keyed per "type:variant" here since panel heights
-   vary so much across the family (see buildBrandingPanel above). */
+/* Creates backdrop panels, welcome signs and wall art.
+
+   Existing arch and fluted panel builders are reused where possible.
+
+   Other shapes use custom panel outlines.
+
+   Signs and panels can also display custom text using the existing branding system.
+*/
 
 import * as THREE from "three";
 import { buildArchPanel, buildFlutedPanel } from "./branding";
@@ -50,9 +42,9 @@ export function outlineAngled(w, h, cut) {
   return [{ x: -hw, y: 0 }, { x: hw, y: 0 }, { x: hw, y: h - cut }, { x: hw - cut, y: h }, { x: -hw, y: h }];
 }
 
-// A quarter-circle-rounded corner (top-right). A small r reads as a
-// gently curved corner, and an r close to min(w,h) reads as a full "half
-// arch" rainbow silhouette, so this one generator covers both variants.
+// Creates a rounded top right corner.
+
+// The curve size can range from a small rounded edge to a larger arch shape.
 export function outlineCurvedCorner(w, h, r, segs = 10) {
   const hw = w / 2;
   const rc = Math.min(r, h, w);
@@ -75,10 +67,9 @@ export function outlineWavyTop(w, h, amp, waves, segs = 16) {
   return pts;
 }
 
-// N thin blades all pivoting from a shared bottom-center hinge, fanned out
-// across `spreadDeg`. The standard "spread around a shared axis" rotation
-// technique (wheel spokes, hand fans), not a custom shape, so no winding
-// risk at all.
+// Creates thin panels that spread out from the same bottom point.
+
+// The spread angle controls how wide the fan opens.
 export function buildFanPanel(bladeW, bladeH, thickness, count, spreadDeg, offset, color, part) {
   const g = new THREE.Group();
   const startAngle = -THREE.MathUtils.degToRad(spreadDeg) / 2;

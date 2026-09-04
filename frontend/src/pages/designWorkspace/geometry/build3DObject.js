@@ -17,12 +17,12 @@ import { buildBackdropPanel, buildWelcomeSign, buildWallArt } from "./panelsSign
 import { buildStage } from "./stages";
 import { buildBalloon } from "./balloons";
 
-/* Build 3D furniture.
-   `variant` (docs/customization-system-design.md §4) picks a genuinely
-   different shape, not just a different color. For example, a wedding chair
-   is a different silhouette from a modern chair, not a recolored one. Types
-   without variant branches just ignore the argument and always build their
-   one shape (Phase 6 broadens coverage as the catalog grows). */
+/* Builds 3D furniture for the workspace.
+
+   Some items use variants to create different shapes.
+
+   Items without variants use their default model.
+*/
 export function build3DObject(type, variant) {
   const group = new THREE.Group();
   switch(type) {
@@ -706,21 +706,20 @@ export function build3DObject(type, variant) {
       group.add(body, top, sign, sconce);
       break;
     }
-    /* Wedding decor/rental set (reference sheet #3). Plain vs. fluted
-       silhouettes reused across arches, pedestals and vases via
-       buildFlutedCylinder/buildFlutedPanel. The two flower clusters and the
-       candle cluster from the same sheet were deliberately held back until
-       the rest of this set was done. See flower-cluster-spray/-bouquet and
-       candle-cluster further down, filed under Decorations/Lighting. */
+    /* Wedding decor and rental items.
+
+   Shared builders are reused for arches, pedestals and vases.
+
+   Flower and candle decorations are included separately in their related categories.
+*/
     case "arch-panel-plain": {
       group.add(buildArchPanel(1.0, 2.2, 0.08, 0xb5654f, "panel"));
       break;
     }
     case "arch-panel-fluted": {
-      // Uses the same total-height math buildArchPanel uses internally
-      // (cap rise = width/2, body = height - that), so this matches the
-      // plain arch's proportions exactly instead of drifting at larger
-      // scales. See the dual-arch-mixed fix just below for why that matters.
+     // Uses the same height calculation as the plain arch.
+
+// This keeps both arch styles matching when they are resized.
       const white = 0x5c4a7c;
       const width = 1.0, totalHeight = 2.2;
       const capH = width / 2, bodyH = totalHeight - capH;
@@ -728,23 +727,16 @@ export function build3DObject(type, variant) {
       group.add(body);
       const cap = new THREE.Mesh(new THREE.SphereGeometry(0.5, 24, 12, 0, Math.PI*2, 0, Math.PI/2), new THREE.MeshStandardMaterial({color:white, side:THREE.DoubleSide}));
       cap.scale.set(width, width, 0.1); cap.position.y = bodyH; cap.userData.part = "panel";
-      // Parented to `body` (not `group`) so the cap shares the exact same
-      // parent as the ribs it tops. Advanced Edit's per-part resize groups
-      // meshes by (part tag, immediate parent), so if this lived as a
-      // sibling under `group` instead, resizing "panel" would scale the
-      // ribs and cap around two different pivot points and they'd drift
-      // apart instead of moving as one rigid piece.
+     // Keeps the cap and ribs under the same parent.
+
+// This makes sure they stay together when the panel is moved or resized.
       body.add(cap);
       break;
     }
     case "dual-arch-mixed": {
-      // The plain arch (buildArchPanel) computes cap-rise = width/2 and
-      // subtracts it from the given height to get the body height. The
-      // fluted arch is hand-built here instead of through buildArchPanel,
-      // so it has to repeat that exact same math. Otherwise the two arches
-      // silently end up different total heights. This reads as "barely
-      // off" at 1x scale but gets dramatically more obvious the bigger the
-      // whole object is scaled, since the gap between them scales up too.
+// Uses the same height calculation as the plain arch.
+
+// This keeps both arch styles the same total height when resized.
       const white = 0xc97b5f;
       const archWidth = 0.85, archHeight = 2.1;
       const capH = archWidth / 2, bodyH = archHeight - capH;
@@ -760,12 +752,9 @@ export function build3DObject(type, variant) {
       // there instead of being a sibling positioned in absolute/group space.
       // The (0.48, -0.02) offset is already supplied by fluted.position above.
       flutedCap.position.set(0, bodyH, 0); flutedCap.userData.part = "panelFluted";
-      // Same reasoning as arch-panel-fluted just above: parent the cap inside
-      // `fluted` (the ribs' own wrapper group) rather than adding it as a
-      // sibling under `group`. Advanced Edit's per-part resize/move groups
-      // meshes by (part tag, immediate parent) into one pivot. If the cap
-      // and ribs don't share a parent, resizing "Fluted Arch" scales them
-      // around two different points and the cap detaches from the body.
+// Keeps the cap and ribs under the same parent group.
+
+// This makes sure they move and resize together during Advanced Edit.
       fluted.add(flutedCap);
       break;
     }

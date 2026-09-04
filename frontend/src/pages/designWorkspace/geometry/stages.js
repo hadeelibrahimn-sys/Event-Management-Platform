@@ -1,19 +1,9 @@
-/* Stages (reference sheet #11, the numbered stage/plinth grid).
-   Extracted from Designworkspace.jsx.
-   Every stage is a platform (optionally with a front step riser) plus an
-   optional freestanding backdrop wall behind it. This reuses buildArchPanel/
-   buildFlatPolygonPanel/buildCurtainPanel from the panels/signs section
-   above for the backdrop shapes, plus one new extrusion helper
-   (buildPlatformSlab) for the handful of platform footprints that aren't
-   a plain box or cylinder (the wavy-front and organic-blob platforms).
-   buildPlatformSlab extrudes a hand-placed, verified-CCW {x,z} outline
-   *upward* (into a horizontal slab) the same way buildFlatPolygonPanel
-   extrudes a {x,y} outline *outward* (into a vertical panel). Same
-   winding-safety reasoning, just the other axis. Every platform/step mesh
-   is tagged "platform", every backdrop mesh "backdrop", so Advanced Edit
-   can recolor the plinth and the backdrop wall independently. +Z is the
-   audience-facing front (where steps extend). -Z is the back (where the
-   backdrop stands). */
+/* Creates different stage and platform styles for the 3D workspace.
+
+   Stages can include steps and different backdrop shapes.
+
+   The platform and backdrop can be edited and colored separately.
+*/
 
 import * as THREE from "three";
 import { buildArchPanel } from "./branding";

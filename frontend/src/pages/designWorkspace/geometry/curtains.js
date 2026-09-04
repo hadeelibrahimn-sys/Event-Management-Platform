@@ -1,13 +1,9 @@
-/* Sheer drape curtains (reference sheet #7, ivory curtain grid).
-   Extracted from Designworkspace.jsx.
-   A single cloth-panel mesh builder plus a small "kind" dispatcher covers
-   every drape style on that sheet: plain hanging panels, panels pinched
-   into a tieback partway down, a wide panel with a curved (rather than
-   flat) bottom edge for swags/valances, and panels rotated around their
-   rod-attachment point for diagonal/crossed drapes. Nothing here is a
-   flat plane. Every panel is a grid mesh with a sine-wave ripple baked
-   into its X position at build time, which is what reads as hanging
-   fabric folds rather than a stiff flat sheet. */
+/* Creates different sheer curtain styles for the 3D workspace.
+
+   Each curtain uses a shaped mesh with soft folds to look more like hanging fabric.
+
+   Different styles include plain, tied, curved and crossed drapes.
+*/
 
 import * as THREE from "three";
 
@@ -28,12 +24,9 @@ export function buildCurtainPanel(width, height, opts = {}) {
       const botY = bottomCurve ? bottomCurve(u) : 0;
       let y = topY - (topY - botY) * v;
       let x = (u - 0.5) * width;
-      // A deterministic per-column ripple, not Math.random(), since this can
-      // rebuild on every color/material tweak. It stands in for hanging folds.
-      // Driven only by `u` (not also by the raw segment index) so the wave
-      // stays smooth at low segment counts instead of aliasing into a
-      // jagged zigzag. A stray extra `ix`-based term here previously made
-      // every panel's edge look chewed-up rather than gently rippled.
+// Creates a consistent ripple across the curtain to represent fabric folds.
+
+// The wave stays smooth even when the mesh uses fewer segments.
       const fold = Math.sin(u * Math.PI * foldFreq) * foldAmp * (0.55 + 0.45 * Math.sin(v * Math.PI * 0.9 + 0.2));
       x += fold;
       if (tiebackAt != null) {
@@ -61,12 +54,9 @@ export function buildCurtainPanel(width, height, opts = {}) {
   geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   geo.setIndex(indices);
   geo.computeVertexNormals();
-  // Only actually enable alpha blending for the noticeably-sheer variants.
-  // Marking every panel `transparent` (even at opacity 0.95+) forces WebGL
-  // to depth-sort and alpha-blend every triangle instead of just depth-
-  // testing them. With several overlapping panels/rod/tieback meshes in
-  // one curtain, that sorting is unstable and reads as broken/blobby
-  // geometry rather than soft fabric, which is what made these look odd.
+// Uses transparency only for the curtain styles that need it.
+
+// This helps avoid visual problems when several curtain parts overlap.
   const isSheer = opacity < 0.97;
   const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
     color, roughness, side: THREE.DoubleSide,
@@ -76,9 +66,9 @@ export function buildCurtainPanel(width, height, opts = {}) {
   return mesh;
 }
 
-/* Bottom-edge curve generators (absolute Y, not an offset) for the swag/
-   valance kind. The panel's top edge stays flat at the rod; only the
-   bottom edge's shape changes. */
+// Creates curved bottom edges for swag and valance curtains.
+
+// The top edge stays straight while the bottom shape changes.
 export function archLegsCurve(height, archFrac) {
   // 0 (touches the floor) at both edges, rising to archFrac*height at the
   // center. Reads as an open arch with the fabric draping down each side.
@@ -200,10 +190,9 @@ export function buildTieDecoration(tieStyle, x, y, color) {
   return buildTiebackBand(x, y, color);
 }
 
-/* Top-edge curve for eyelet/grommet curtains. The fabric is threaded
-   through evenly spaced rings rather than gathered onto the rod, so the
-   header dips into a smooth scallop between each ring instead of hanging
-   flat. Peaks (at the rod) fall exactly at each grommet position. */
+// Creates the curved top edge used for eyelet curtains.
+
+// The fabric forms soft curves between each ring along the curtain rod.
 export function eyeletTopCurve(height, grommetCount, dipDepth) {
   const gaps = Math.max(1, grommetCount - 1);
   return u => height - dipDepth * (0.5 - 0.5 * Math.cos(u * Math.PI * 2 * gaps));
@@ -230,18 +219,14 @@ export function buildEyeletPanelWithRings(panelW, height, grommetCount, dipDepth
   return g;
 }
 
-/* Opacity is tuned per `kind`, not just per "how sheer should this look".
-   A kind whose panels can overlap in screen space (crossed/tieback-band-
-   over-fabric) is pushed close to 1 regardless, since alpha-blending stacked
-   transparent triangles is what actually caused the broken/blobby look.
-   Only kinds where panels never overlap each other (a single swag mesh, or
-   two side-by-side straight panels with a gap between them) are given real
-   transparency. Swag/valance curve depths are also capped well short of
-   the panel's full height so the fabric never thins to a near-zero-height
-   sliver at its shallowest point, which read as a torn/broken membrane. */
-// Previously every curtain fell back to buildCurtain's one shared cream
-// default, since none of these set their own `color`, so all 22 rendered
-// identically. Each now carries its own rich, clearly-distinct fabric tone.
+/* Sets curtain transparency based on the curtain style.
+
+   Styles with overlapping fabric use less transparency to avoid visual issues.
+
+   Swag and valance shapes are also limited so the fabric keeps a natural thickness.
+
+   Each curtain style now uses its own fabric color instead of sharing one default color.
+*/
 export const CURTAIN_STYLES = {
   "sheer-straight-double": { kind: "double-straight", width: 1.9, height: 2.0, opacity: 0.65, foldAmp: 0.022, foldFreq: 3, color: 0xc97b84 },
   "tieback-classic": { kind: "double-tieback", width: 1.9, height: 2.0, opacity: 0.98, foldAmp: 0.03, tiebackAt: 0.55, tiebackPull: 0.4, color: 0x8b2e3f },

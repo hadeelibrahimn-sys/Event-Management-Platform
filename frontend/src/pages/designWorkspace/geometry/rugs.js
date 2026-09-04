@@ -1,17 +1,9 @@
-/* Carpets and rugs (reference sheet #9, the numbered rug grid).
-   Extracted from Designworkspace.jsx.
-   Every rug reduces to a floor-hugging surface (rectangular, round, oval,
-   or an irregular animal-hide silhouette for faux fur/sheepskin) with a
-   deterministic per-vertex height "pile" ripple standing in for shag/
-   fluffy/high-pile/bouclé/jute/sisal texture. This is the same
-   displaced-grid trick buildCurtainPanel uses for fabric folds, just
-   applied to a horizontal surface instead of a vertical one. Patterned
-   rugs (border, striped, diamond, chevron, trellis, moroccan, geometric,
-   vintage/oriental, modern abstract) get a second thin layer of small flat
-   accent shapes sitting just above the pile surface, built from a small
-   set of reusable motif generators rather than one bespoke shape per
-   variant. Base pile is always tagged "rug". Any accent layer is tagged
-   "pattern": two independently colorable parts regardless of shape. */
+/* Creates different carpet and rug styles for the 3D workspace.
+
+   Rugs can use different shapes, textures and surface patterns.
+
+   The main rug and its pattern can be colored separately.
+*/
 
 import * as THREE from "three";
 
@@ -92,10 +84,10 @@ export function buildRugSurface(shape, opts = {}) {
   return mesh;
 }
 
-/* Rug pattern-accent motif generators.
-   Small flat shapes tagged "pattern", sitting a hair above the pile
-   surface. Reused across several catalog variants with different spacing/
-   scale rather than one-off per pattern, same reasoning as VASE_STYLES. */
+/* Creates reusable pattern shapes for rugs.
+
+   Different rug styles can reuse these patterns with different sizes and spacing.
+*/
 export function patMat(color) { return new THREE.MeshStandardMaterial({ color, roughness: 0.85 }); }
 
 export function buildBorderFrame(w, d, inset, lineW, color, y) {
@@ -200,10 +192,9 @@ export function buildMedallionPattern(w, d, color, y, dense) {
   });
   return g;
 }
+// Gives each rug its own clear default color.
 
-// Every rug gets its own saturated, clearly-distinct default color. The
-// original cream/ivory family read almost identically across all 25 in the
-// catalog list, so each one now carries a real hue instead.
+// This makes the different rug styles easier to distinguish in the catalog.
 export const RUG_STYLES = {
   "plain-rectangular": { shape: "rect", w: 1.6, d: 1.0, color: 0xc1666b },
   shaggy:              { shape: "rect", w: 1.6, d: 1.0, pileAmp: 0.02,  pileFreq: 14, color: 0xd4a373, roughness: 0.98 },

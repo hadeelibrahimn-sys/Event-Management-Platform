@@ -1,6 +1,6 @@
-/* Element icon: small SVG preview for each catalog type.
-   Extracted from Designworkspace.jsx. Pure and stateless: a big lookup
-   object keyed by `type`, plus a generic fallback square. */
+/* Shows a small icon for each catalog item.
+   Uses a default square icon when no matching type is found.
+*/
 
 export function ElementIcon({ type }) {
   const icons = {

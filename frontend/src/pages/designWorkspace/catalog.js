@@ -1,11 +1,9 @@
-/* DesignWorkspace catalog and metadata.
-   Extracted from Designworkspace.jsx (originally ~9,600 lines in one file).
-   This module holds pure configuration/data: layout thumbnails, category
-   taxonomy, the full object catalog (ELEMENTS/TYPE_LABELS/PART_LABELS),
-   context-aware ranking, material presets, color presets, and the
-   booth-branding / auto-attach configuration. Nothing here touches React
-   state or Three.js directly. It's imported by geometry/build3DObject.js
-   and by the DesignWorkspace component itself. */
+/* Stores the DesignWorkspace catalog and related settings.
+
+   This includes layouts, categories, object details, ranking, materials, colors and branding options.
+
+   The file contains configuration data only and does not directly use React or Three.js.
+*/
 
 import thumbIndoor   from "../../assets/layouts/thumb-indoor.png";
 import thumbEnclosed from "../../assets/layouts/thumb-enclosed.png";
@@ -20,13 +18,14 @@ export const LAYOUT_IMAGES = {
   custom:   null,
 };
 
-/* Category taxonomy.
-   Stable ids are what gets stored on each placed object. Labels are what
-   the UI shows. The two are kept independent so labels can be reworded later
-   (or localized) without touching any saved data. "structural" isn't a
-   drag-and-drop category since walls/doors/windows come from the tile floor
-   plan, not this catalog, but it's listed here per the design doc for
-   completeness and future reference. */
+/* Defines the object categories used in the workspace.
+
+   Category ids are stored with objects while labels are shown in the interface.
+
+   This allows labels to change later without affecting saved data.
+
+   Structural items are listed for reference even though they are not added from the catalog.
+*/
 export const CATEGORY_META = [
   { id: "furniture",     label: "Furniture" },
   { id: "chairs",        label: "Chairs" },
@@ -46,18 +45,18 @@ export const CATEGORY_META = [
 export const CATEGORY_LABELS = Object.fromEntries(CATEGORY_META.map(c => [c.id, c.label]));
 export const CATEGORIES = ["All", ...CATEGORY_META.map(c => c.id)];
 
-/* Resize is deliberately +/- steps rather than a free-drag gizmo. It's fast
-   to use, and the clamp keeps people from accidentally creating an
-   unrealistically tiny or giant chair. */
+/* Resizes objects in small steps.
+
+   The limits prevent objects from becoming too small or too large.
+*/
 export const SCALE_STEP = 0.1;
 export const SCALE_MIN = 0.5;
 export const SCALE_MAX = 4.0;
 
-/* Advanced Edit Phase 3: per-component position/rotation/size.
-   Deliberately a tighter range than the whole-object Size control above.
-   These nudge one piece (a shelf, a canopy) relative to where it was
-   already built, rather than resize an entire object, so a runaway value is
-   more likely to clip through its neighbors than look intentional. */
+/* Controls position, rotation and size changes for individual object parts.
+
+   The limits are smaller to help prevent parts from moving or resizing too far.
+*/
 export const PART_POS_STEP   = 0.05;
 export const PART_POS_MIN    = -0.6;
 export const PART_POS_MAX    = 0.6;
@@ -66,14 +65,12 @@ export const PART_SCALE_STEP = 0.1;
 export const PART_SCALE_MIN  = 0.5;
 export const PART_SCALE_MAX  = 2.0;
 
-/* Element catalog.
-   `id` is the unique catalog/drag key. `type` is the base shape passed to
-   build3DObject's switch. Several catalog entries can share one `type`
-   while differing only in `variant` (Phase 5: quality over quantity, meaning
-   2-3 genuinely different shapes per type rather than one each; see
-   docs/customization-system-design.md §4). Types without multiple
-   variants yet just use their own id as both id and type. Phase 6 widens
-   coverage as the catalog grows toward 40-50 objects. */
+/* Defines the objects available in the catalog.
+
+   Each item has a unique id, type and optional variant.
+
+   Multiple items can share the same type while using different shapes.
+*/
 export const ELEMENTS = [
   { id: "round-table",         label: "Round Table",           category: "furniture", type: "round-table", variant: "default" },
   { id: "round-table-banquet", label: "Round Table (Banquet)", category: "furniture", type: "round-table", variant: "banquet" },
@@ -579,22 +576,20 @@ export const PART_LABELS = {
   "sofa-item": { body: "Sofa" },
 };
 
-/* Advanced Edit's sentinel for "no tagged sub-parts, edit the whole thing".
-   Used for the majority of the catalog (chairs, tables, most equipment)
-   that's a single unified mesh rather than a named-part station. Selecting
-   it in the component panel reuses the item's existing whole-object color/
-   material/scale/position/rotation fields instead of the partColors/
-   partMaterials/partTransforms dictionaries, so there's no separate empty
-   per-part system to keep in sync for objects that only ever have one part. */
+/* Used when an object does not have separate editable parts.
+
+   In this case, the normal object editing controls are used instead.
+*/
 export const WHOLE_PART = "__whole__";
 export const getPartLabel = (item, part) =>
   part === WHOLE_PART ? (TYPE_LABELS[item.type] || "Object") : ((PART_LABELS[item.type] || {})[part] || part);
 
-/* Context-aware ranking (docs/customization-system-design.md §5).
-   Ordered lists of catalog ids to float to the top of the library for a
-   given Event Type. Nothing is ever hidden: every object stays reachable,
-   only the order changes. Guest count never factors in here at all; it's
-   kept scoped purely to capacity guidance elsewhere. */
+/* Ranks catalog items based on the selected event type.
+
+   Relevant items appear first, but all objects remain available.
+
+   Guest count does not affect this ranking.
+*/
 export const EVENT_TYPE_PRIORITY = {
   education: [
     "rect-table", "chair-banquet", "led-wall", "stage-flat-backdrop",
@@ -635,19 +630,17 @@ export const RECOMMENDED_COUNT = 6; // How many top-ranked items get the badge
 export const wallColorPresets  = ["#ffffff","#f5f0ff","#fdf6ec","#ecf0f1","#d6eaf8","#eafaf1","#2c3e50","#1a1a2e"];
 export const floorColorPresets = ["#f5f5f5","#f0e6d3","#d5b896","#c8b89a","#95a5a6","#5d4037","#263238","#e8e0f0"];
 export const itemColorPresets  = ["#8B5E3C","#c4b5fd","#7c3aed","#ffffff","#1e1b4b","#d97706","#16a34a","#ef4444","#374151","#f9a8d4"];
-// A dedicated set of white shades. A single flat "#ffffff" swatch reads as
-// dull grey once it's lit in the 3D scene, so white items get their own row
-// of real whites to pick from (pure, warm, cool, ivory) instead of one
-// washed-out option.
+// Provides different white color options for 3D objects.
+
+// This helps white materials look more natural under scene lighting.
 export const whiteShadePresets = ["#ffffff","#fffdf7","#fdf6e3","#f5f5f0","#eef1f5","#faf3e8"];
 
-/* Material presets (docs/customization-system-design.md §3).
-   One shared vocabulary across every object type, structural or not, so a
-   table and a floor can both be "wood" and mean the same thing. Values are
-   roughness/metalness for MeshStandardMaterial; glass additionally goes
-   transparent. Applied uniformly across an object's sub-meshes. This is
-   good enough fidelity for this project's scope without needing per-part
-   material slots. */
+/* Defines the material styles used across workspace objects.
+
+   The same presets are shared by different object types.
+
+   Each material uses simple surface settings such as roughness, metalness and transparency.
+*/
 export const MATERIAL_PRESETS = {
   wood:     { label: "Wood",     roughness: 0.75, metalness: 0.0  },
   marble:   { label: "Marble",   roughness: 0.15, metalness: 0.05 },
@@ -677,10 +670,10 @@ export const BRANDABLE_TYPES = new Set([
   "backdrop-panel", "welcome-sign",
 ]);
 
-/* The shared branding panel defaults to y=0.5/z=0.311, tuned for
-   coffee-booth counter height. Every other station shape below has a
-   different height and depth, so each gets its own placement here. This
-   avoids the text floating inside the object or off its face. */
+/* Sets the text position for different booth and station shapes.
+
+   Each object uses its own placement so the text stays correctly aligned on its front surface.
+*/
 export const BRANDING_PANEL_POS = {
   "floral-arch-backdrop": { y: 1.3,  z: 0.08 },
   "drape-arch-backdrop":  { y: 1.3,  z: 0.1  },
@@ -719,22 +712,19 @@ export const BRANDING_PANEL_POS = {
   "welcome-sign:clear-frame":       { y: 1.1,  z: 0.05 },
 };
 
-/* Dropping anything within this radius of a coffee booth auto-attaches it
-   as that station's child (docs/coffee-corner-design.md §6). No separate
-   "accessories panel" is needed since dragging normally just works. Items in
-   this set additionally default to sitting at counter height rather than
-   the floor when attached this way. */
+/* Automatically attaches nearby accessories to a coffee booth.
+
+   Attached items are placed at counter height instead of on the floor.
+*/
 export const STATION_ATTACH_RADIUS = 1.3;
 export const COUNTER_TOP_TYPES = new Set([
   "flower-arrangement",
 ]);
 
-/* Same auto-attach idea as the coffee-corner set above, generalized to
-   "any decorated element" for the floral swags/garlands below. This covers
-   every structural backdrop, arch, pedestal, and table-style piece in the
-   catalog someone might actually want to drape flowers over. A wider
-   radius than STATION_ATTACH_RADIUS since these hosts (a 2.2m arch vs a
-   0.5m pedestal) are physically bigger than a coffee booth. */
+/* Automatically attaches nearby floral decorations to suitable objects.
+
+   A wider range is used because these objects can be larger than coffee booths.
+*/
 export const DECOR_ATTACH_RADIUS = 1.8;
 export const DECOR_ATTACH_TYPES = new Set([
   ...BRANDABLE_TYPES,
